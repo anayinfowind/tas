@@ -48,6 +48,6 @@ $plugin = new stdClass();
 $plugin->version   = 2019062701;                // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2014111001;            // Requires this Moodle version.
 $plugin->component = 'tool_leeloolxp_sync';     // Full name of the plugin (used for diagnostics).
-$plugin->release  = '0.1.1 (Build: 2016090201)';
+$plugin->release  = '0.1.1 (Build 2016090202)';
 $plugin->maturity  = MATURITY_STABLE;
 
