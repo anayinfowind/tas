@@ -898,7 +898,9 @@ if (!empty($categories)) {
                                                                 ','<?php echo $coursevalue->id; ?>');">
                                                                 Unsync</a></li>
                                                             <li>
-                                                                <a href="<?php echo parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH); ?>?resync=resync&courseid_resync=<?php
+                                                            <?php $parse_url =  parse_url($_SERVER['REQUEST_URI'] ,PHP_URL_PATH); ?>
+                                                                <a href="<?php echo $parse_url; ?>
+                                                                ?resync=resync&courseid_resync=<?php
                                                                 echo $coursevalue->id; ?>">
                                                                 Resync</a></li>
                                                             <?php
@@ -906,8 +908,8 @@ if (!empty($categories)) {
                                                                 <li>
                                                                     <a href="<?php
                                                                     echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                                                                ?action=add&courseid=<?php
-                                                                echo $coursevalue->id; ?>">Add</a></li>
+                                                                ?action=add&courseid=
+                                                                <?php echo $coursevalue->id; ?>">Add</a></li>
                                                                 <?php
                                                             }?>
                                                     </ul>
