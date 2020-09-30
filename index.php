@@ -826,10 +826,8 @@ if (!empty($error)) {
     echo $OUTPUT->container($error, 'leeloolxp_sync_myformerror');
 }
 
-if (!isset($_REQUEST['action'])) {
-    ?>
-
-<div id="accordion">
+if (!isset($_REQUEST['action'])) { 
+    ?> <div id="accordion">
 
 <?php
 
@@ -859,8 +857,8 @@ if (!empty($categories)) {
                 <div class="card-body">
                     <div class="card-table">
                         <table>
-                            <?php
-                                $courses = $DB->get_records('course', array('category' => $catvalue->id));
+                        <?php
+                        $courses = $DB->get_records('course', array('category' => $catvalue->id));
                         if (!empty($courses)) {
                             foreach ($courses as $courskey => $coursevalue) {
 ?>
@@ -877,10 +875,10 @@ if (!empty($categories)) {
                                                     $alreadysync = false;
                                                     $coursesyncedquery = $DB->get_records('tool_leeloolxp_sync',
                                                     array('courseid' => $coursevalue->id));
-                                    if (!empty($coursesyncedquery)) {
+                                        if (!empty($coursesyncedquery)) {
                                             $alreadysync = true;
-                                    }
-                                    if ($alreadysync) {
+                                        }
+                                        if ($alreadysync) {
 ?>
                                                     <span class="tqs-span-yes">Yes</span>
                                                     <?php}else{?><span class="tqs-span-no">No</span><?php}?>
@@ -891,8 +889,7 @@ if (!empty($categories)) {
                                                                 ?action=add&courseid=<?php echo $coursevalue->id; ?>">
                                                                 Edit</a></li>
                                                             <li>
-                                                                <a href="#" onclick="UnsyncCourse('<?php 
-                                                                echo $coursevalue->fullname; ?>
+                                                                <a href="#" onclick="UnsyncCourse('<?php echo $coursevalue->fullname; ?>
                                                                 ','<?php echo $coursevalue->id; ?>');">
                                                                 Unsync</a></li>
                                                             <li>
@@ -901,7 +898,7 @@ if (!empty($categories)) {
                                                                 Resync</a></li>
                                                             <?php } else {?>
                                                                 <li>
-                                                                    <a href="<?php 
+                                                                    <a href="<?php
                                                                     echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
                                                                 ?action=add&courseid=<?php 
                                                                 echo $coursevalue->id; ?>">Add</a></li>
