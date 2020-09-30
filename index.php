@@ -1010,11 +1010,11 @@ if ($_REQUEST['action'] == 'add') {
                                                                                 $activitystartdates = $valuefinal->timeopen;
                                                                                 $activityenddates = $valuefinal->timeopen;
                                                                             } else {
-                                                                                if ($tbl == 
+                                                                                if ($tbl ==
                                                                                 'workshop') {
                                                                                     $activitystartdates
-                                                                                    =$valuefinal->submissionstart;
-                                                                                    $activityenddates=$valuefinal->submissionend;
+                                                                                    = $valuefinal->submissionstart;
+                                                                                    $activityenddates= $valuefinal->submissionend;
                                                                                 } else {
                                                                                     $activitystartdates = $coursedetails->startdate;
                                                                                     $activityenddates = $coursedetails->enddate;
@@ -1040,19 +1040,17 @@ if ($_REQUEST['action'] == 'add') {
                                             }?>
                                                                 <tr>
                                                                     <td><?php $oldsectionsname == '';
-                                                                    if ($oldsectionsname != 
+                                                                    if ($oldsectionsname !=
                                                                     $sectionsdetails->name) {
                                                                         echo $sectionsdetails->name;?> - <?php
-                                                                    echo $coursedetails->fullname;} ?
-                                                                    ></td>
+                                                                    echo $coursedetails->fullname;} ?></td>
                                                                     <td>
-                                                                        <div class="tqs-left">
-                                                                            <?php
-                                                    $cm = $modinfo->cms[$activityids->id];
+                                                                        <div class="tqs-left"><?php
+                                                                            $cm = $modinfo->cms[$activityids->id];
 
                                             if ($cm) {
                                                 $iconurl = $cm->get_icon_url();
-                                                $icon = '<img src="' . $cm->get_icon_url() . '" 
+                                                $icon = '<img src="' . $cm->get_icon_url() . '"
                                                 class="icon" alt="" />&nbsp;';
                                             } else {
                                                 $icon = '<i class="fa fa-recycle"></i>';
@@ -1066,10 +1064,17 @@ if ($_REQUEST['action'] == 'add') {
                                                                     </td>
                                                                     <td>
                                                                         <div class="tqs-right">
-                                                                            <span class="tqs-span-<?php if ($enabled) {
-                                                                                echo "yes";} else {echo "no";}?>">
-                                                                                <?php if ($enabled) {echo "Yes";} else {
-                                                                                    echo "No";}?> </span>
+                                                                            <span class="tqs-span-
+                                                                            <?php if ($enabled) {
+                                                                                echo "yes";
+                                                                                } else { 
+                                                                                    echo "no";
+                                                                                    }?>">
+                                                                                <?php if ($enabled) {
+                                                                                    echo "Yes";
+                                                                                } else {
+                                                                                    echo "No";
+                                                                                    }?> </span>
                                                                             <ul>
                                                                             <?php $url = parse_url($_SERVER['REQUEST_URI', 
                                                                                 PHP_URL_PATH);
@@ -1109,7 +1114,7 @@ if ($_REQUEST['action'] == 'add') {
                                                                                     </td>
                                                                                     <?php if (isset
                                                                                     ($valuefinal->questionsperpage)) {
-                                                $isquiz = $DB->get_record_sql("SELECT id FROM 
+                                                $isquiz = $DB->get_record_sql("SELECT id FROM
                                                 {tool_leeloolxp_sync} 
                                                 where activityid = '$activityids->id' and `is_quiz` = '1'");
 
