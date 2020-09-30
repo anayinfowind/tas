@@ -1114,16 +1114,16 @@ if ($_REQUEST['action'] == 'add') {
                                                                                     </td>
                                                                                     <?php if (isset
                                                                                     ($valuefinal->questionsperpage)) {
-                                                $isquiz = $DB->get_record_sql("SELECT id FROM
-                                                {tool_leeloolxp_sync}
-                                                where activityid = '$activityids->id' and `is_quiz` = '1'");
+                                                                                        $isquiz = $DB->get_record_sql("SELECT id FROM
+                                                                                        {tool_leeloolxp_sync}
+                                                                                        where activityid = '$activityids->id' and `is_quiz` = '1'");
 
-                                                if (!empty($isquiz)) {
-                                                    $checked = true;
-                                                } else {
-                                                        $checked = false;
-                                                        }
-                                                ?>
+                                                                                        if (!empty($isquiz)) {
+                                                                                            $checked = true;
+                                                                                        } else {
+                                                                                                $checked = false;
+                                                                                                }
+                                                                                        ?>
                                                                                         <td style="text-align: center"> 
                                                                                         <input type="checkbox" 
                                                                                         <?php if ($checked) {
@@ -1131,10 +1131,13 @@ if ($_REQUEST['action'] == 'add') {
                                                                                             }?> 
                                                                                             name="quiz_sync[]" 
                                                                                             class="quiz_sync_check" 
-                                                                                            value="<?php 
+                                                                                            value="<?php
                                                                                             echo $activityids->id; ?>"></td> 
-                                                                                            <?php 
-                                                                                    } else {?> <td></td> <?php 
+                                                                                            <?php
+                                                                                    }else 
+                                                                                    {?> 
+                                                                                        <td></td> 
+                                                                                        <?php
                                                                                     }?>
                                                                                     </tr>
 
