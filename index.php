@@ -889,18 +889,20 @@ if (!empty($categories)) {
                                                                 ?action=add&courseid=<?php echo $coursevalue->id; ?>">
                                                                 Edit</a></li>
                                                             <li>
-                                                                <a href="#" onclick="UnsyncCourse('<?php echo $coursevalue->fullname; ?>
+                                                                <a href="#" onclick="UnsyncCourse('<?php echo
+                                                                $coursevalue->fullname; ?>
                                                                 ','<?php echo $coursevalue->id; ?>');">
                                                                 Unsync</a></li>
                                                             <li>
-                                                                <a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>?resync=resync&courseid_resync=<?php 
+                                                                <a href="<?php echo parse_url($_SERVER['REQUEST_URI']
+                                                                PHP_URL_PATH); ?>?resync=resync&courseid_resync=<?php
                                                                 echo $coursevalue->id; ?>">
                                                                 Resync</a></li>
                                                             <?php } else {?>
                                                                 <li>
                                                                     <a href="<?php
                                                                     echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                                                                ?action=add&courseid=<?php 
+                                                                ?action=add&courseid=<?php
                                                                 echo $coursevalue->id; ?>">Add</a></li>
                                                                 <?php }?>
                                                     </ul>
@@ -957,7 +959,7 @@ if ($_REQUEST['action'] == 'add') {
                         foreach ($modulescourse as $coursemoduledetails) {
                             $moduleid = $coursemoduledetails->module;
                             $instance = $coursemoduledetails->instance;
-                            $modules = $DB->get_records("modules", array('id' => $module_id));
+                            $modules = $DB->get_records("modules", array('id' => $moduleid));
                             if (!empty($modules)) {
                                 foreach ($modules as $key => $value) {
                                     $tbl = $value->name;
@@ -1001,8 +1003,8 @@ if ($_REQUEST['action'] == 'add') {
                                                                                 $activityenddates = $valuefinal->timeopen;
                                                                             } else {
                                                                                 if ($tbl == 'workshop') {
-                                                                                    $activitystartdates = $valuefinal->submissionstart;
-                                                                                    $activityenddates = $valuefinal->submissionend;
+                                                                                    $activitystartdates=$valuefinal->submissionstart;
+                                                                                    $activityenddates=$valuefinal->submissionend;
                                                                                 } else {
                                                                                     $activitystartdates = $coursedetails->startdate;
                                                                                     $activityenddates = $coursedetails->enddate;
@@ -1018,7 +1020,7 @@ if ($_REQUEST['action'] == 'add') {
                                             }
                                             $activityids = $DB->get_record('course_modules',
                                             array('instance' => $instance, 'module' => $moduleid));
-                                            $alreadyenabled = $DB->get_record_sql("SELECT id FROM 
+                                            $alreadyenabled = $DB->get_record_sql("SELECT id FROM
                                             {tool_leeloolxp_sync}
                                             where activityid = '$activityids->id' and enabled = '1'");
                                             $enabled = false;
@@ -1033,7 +1035,7 @@ if ($_REQUEST['action'] == 'add') {
                                                                     <td>
                                                                         <div class="tqs-left">
                                                                             <?php
-$cm = $modinfo->cms[$activityids->id];
+                                                    $cm = $modinfo->cms[$activityids->id];
 
                                             if ($cm) {
                                                 $iconurl = $cm->get_icon_url();
@@ -1059,7 +1061,8 @@ $cm = $modinfo->cms[$activityids->id];
                                             if ($enabled) {
                                                 ?>
                                                                                         <li><a  href="
-                                                                                        <?php echo $url; ?>?resync_activity=1&activity_id=<?php echo $activityids->id; ?>
+                                                                                        <?php echo $url; ?>?resync_activity=1&activity_id=<?php
+                                                                                        echo $activityids->id; ?>
                                                                                         &activity_name=
                                                                                         <?php echo $valuefinal->name ?>&course_id=
                                                                                         <?php echo $_REQUEST['courseid']; ?>">Resync</a></li>
@@ -1069,11 +1072,11 @@ $cm = $modinfo->cms[$activityids->id];
                                             if ($enabled) {?>
                                                                                         <li><a onclick="UnsyncActivity('<?php echo $activityids->id; ?>')" href="#">Unsync</a></li><?php } else {
                                                 $querystring = $coursedetails->fullname . "$$" . 
-                                                $sectionsdetails->name . "$$" . $valuefinal->name . "$$" . 
-                                                $activityids->id . "$$" . $courseid . "$$" . 
-                                                $sectionsdetails->summary . "$$" . 
+                                                $sectionsdetails->name . "$$" . $valuefinal->name . "$$" .
+                                                $activityids->id . "$$" . $courseid . "$$" .
+                                                $sectionsdetails->summary . "$$" .
                                                 strip_tags($valuefinal->intro . "$$" . 
-                                                $activitystartdates . "$$" . 
+                                                $activitystartdates . "$$" .
                                                 $activityenddates . "$$" . $tbl . "$$" . $iconurl);?>
                                                                                             <li><input class="all_activity_checkbox_single" type="checkbox" name="all_activities[]" value="<?php echo str_replace('"', '', $querystring); ?>"></li>
                                                                                             <?php }?>
