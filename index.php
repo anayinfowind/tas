@@ -826,7 +826,7 @@ if (!empty($error)) {
     echo $OUTPUT->container($error, 'leeloolxp_sync_myformerror');
 }
 
-if (!isset($_REQUEST['action'])) { 
+if (!isset($_REQUEST['action'])) {
     ?> <div id="accordion">
 
 <?php
@@ -875,17 +875,17 @@ if (!empty($categories)) {
                                                     $alreadysync = false;
                                                     $coursesyncedquery = $DB->get_records('tool_leeloolxp_sync',
                                                     array('courseid' => $coursevalue->id));
-                                        if (!empty($coursesyncedquery)) {
-                                            $alreadysync = true;
-                                        }
-                                        if ($alreadysync) {
+                                                if (!empty($coursesyncedquery)) {
+                                                    $alreadysync = true;
+                                                }
+                                                if ($alreadysync) {
 ?>
                                                     <span class="tqs-span-yes">Yes</span>
-                                                    <?php}else{?><span class="tqs-span-no">No</span><?php}?>
+                                                    <?}else{?><span class="tqs-span-no">No</span><?}?>
                                                     <ul>
                                                         <?php if ($alreadysync) {?>
-                                                            <li><a href="<?php 
-                                                                echo parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH); ?>
+                                                            <li><a href="<?php
+                                                                echo parse_url($_SERVER['REQUEST_URI'] , PHP_URL_PATH); ?>
                                                                 ?action=add&courseid=<?php echo $coursevalue->id; ?>">
                                                                 Edit</a></li>
                                                             <li>
@@ -898,18 +898,22 @@ if (!empty($categories)) {
                                                                 PHP_URL_PATH); ?>?resync=resync&courseid_resync=<?php
                                                                 echo $coursevalue->id; ?>">
                                                                 Resync</a></li>
-                                                            <?php } else {?>
+                                                            <?php
+                                                        } else {?>
                                                                 <li>
                                                                     <a href="<?php
                                                                     echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
                                                                 ?action=add&courseid=<?php
                                                                 echo $coursevalue->id; ?>">Add</a></li>
-                                                                <?php }?>
+                                                                <?php
+                                                            }?>
                                                     </ul>
                                                 </div>
                                             </td>
                                         </tr>
-                                    <?php }}
+                                    <?php
+                                    }
+                                }
 ?>
                                 </table>
                             </div>
@@ -917,9 +921,8 @@ if (!empty($categories)) {
                     </div>
                 </div>
             <?php
-        }
-    }
-?>
+            }
+        }?>
 </div>
 
 
