@@ -1067,7 +1067,7 @@ if ($_REQUEST['action'] == 'add') {
                                                                             <span class="tqs-span-
                                                                             <?php if ($enabled) {
                                                                                 echo "yes";
-                                                                                } else { 
+                                                                                } else {
                                                                                     echo "no";
                                                                                     }?>">
                                                                                 <?php if ($enabled) {
@@ -1076,7 +1076,7 @@ if ($_REQUEST['action'] == 'add') {
                                                                                     echo "No";
                                                                                     }?> </span>
                                                                             <ul>
-                                                                            <?php $url = parse_url($_SERVER['REQUEST_URI', 
+                                                                            <?php $url = parse_url($_SERVER['REQUEST_URI',
                                                                                 PHP_URL_PATH);
                                                                                 if ($enabled) {
                                                 ?>
@@ -1092,21 +1092,21 @@ if ($_REQUEST['action'] == 'add') {
                                                                                         <?php
 }
                                             if ($enabled) {?>
-                                                                                        <li><a onclick="UnsyncActivity('<?php 
-                                                                                        echo $activityids->id; ?>')" 
+                                                                                        <li><a onclick="UnsyncActivity('
+                                                                                        <?php echo $activityids->id; ?>')" 
                                                                                         href="#">Unsync</a></li><?php } else {
-                                                $querystring = $coursedetails->fullname . "$$" . 
+                                                $querystring = $coursedetails->fullname . "$$" .
                                                 $sectionsdetails->name . "$$" . $valuefinal->name . "$$" .
                                                 $activityids->id . "$$" . $courseid . "$$" .
                                                 $sectionsdetails->summary . "$$" .
-                                                strip_tags($valuefinal->intro . "$$" . 
+                                                strip_tags($valuefinal->intro . "$$" .
                                                 $activitystartdates . "$$" .
                                                 $activityenddates . "$$" . $tbl . "$$" . $iconurl);?>
-                                                                                            <li><input 
+                                                                                            <li><input
                                                                                             class="all_activity_checkbox_singl
-                                                                                            e" type="checkbox" 
+                                                                                            e" type="checkbox"
                                                                                             name="all_activities[]" value="<?
-                                                                                            php echo str_replace('"', '', 
+                                                                                            php echo str_replace('"', '',
                                                                                             $querystring); ?>"></li>
                                                                                             <?php }?>
                                                                                         </ul>
