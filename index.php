@@ -26,7 +26,7 @@ define('NO_OUTPUT_BUFFERING', true);
 require(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 global $DB;
-if(isset($_REQUEST['leelo_activity_data'])){ 
+if( isset($_REQUEST['leelo_activity_data']) ) {
     $courseid = $_REQUEST['course_id'];
     $activities = json_decode($_REQUEST['leelo_activity_data'],true);
     if(!empty($activities)){
