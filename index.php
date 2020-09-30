@@ -961,8 +961,8 @@ if ($_REQUEST['action'] == 'add') {
         if (!empty($sections)) {
             foreach ($sections as $sectionkey => $sectionsdetails) {
                 if ($sectionsdetails->name != '') {
-                    $modules_course = $DB->get_records_sql("select * from 
-                    {course_modules} where `section` = '" . $sectionsdetails->id . "' order by added DESC");
+                    $modulescourse = $DB->get_records_sql("select * from
+                    {course_modules} where section = '" . $sectionsdetails->id . "' order by added DESC");
                     if (!empty($modulescourse)) {
                         foreach ($modulescourse as $coursemoduledetails) {
                             $moduleid = $coursemoduledetails->module;
@@ -1003,16 +1003,12 @@ if ($_REQUEST['action'] == 'add') {
                                                                         $activityenddates = $valuefinal->timeclose;
                                                                     } else {
                                                                         if ($tbl == 'forum') {
-                                                                            $activitystartdates = 
-                                                                            $valuefinal->duedate;
-                                                                            $activityenddates = 
-                                                                            $valuefinal->cutoffdate;
+                                                                            $activitystartdates = $valuefinal->duedate;
+                                                                            $activityenddates = $valuefinal->cutoffdate;
                                                                         } else {
                                                                             if ($tbl == 'wespher') {
-                                                                                $activitystartdates = 
-                                                                                $valuefinal->timeopen;
-                                                                                $activityenddates = 
-                                                                                $valuefinal->timeopen;
+                                                                                $activitystartdates = $valuefinal->timeopen;
+                                                                                $activityenddates = $valuefinal->timeopen;
                                                                             } else {
                                                                                 if ($tbl == 
                                                                                 'workshop') {
