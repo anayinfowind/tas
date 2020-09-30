@@ -995,15 +995,21 @@ if ($_REQUEST['action'] == 'add') {
                                                                         $activityenddates = $valuefinal->timeclose;
                                                                     } else {
                                                                         if ($tbl == 'forum') {
-                                                                            $activitystartdates = $valuefinal->duedate;
-                                                                            $activityenddates = $valuefinal->cutoffdate;
+                                                                            $activitystartdates = 
+                                                                            $valuefinal->duedate;
+                                                                            $activityenddates = 
+                                                                            $valuefinal->cutoffdate;
                                                                         } else {
                                                                             if ($tbl == 'wespher') {
-                                                                                $activitystartdates = $valuefinal->timeopen;
-                                                                                $activityenddates = $valuefinal->timeopen;
+                                                                                $activitystartdates = 
+                                                                                $valuefinal->timeopen;
+                                                                                $activityenddates = 
+                                                                                $valuefinal->timeopen;
                                                                             } else {
-                                                                                if ($tbl == 'workshop') {
-                                                                                    $activitystartdates=$valuefinal->submissionstart;
+                                                                                if ($tbl == 
+                                                                                'workshop') {
+                                                                                    $activitystartdates
+                                                                                    =$valuefinal->submissionstart;
                                                                                     $activityenddates=$valuefinal->submissionend;
                                                                                 } else {
                                                                                     $activitystartdates = $coursedetails->startdate;
@@ -1030,8 +1036,11 @@ if ($_REQUEST['action'] == 'add') {
                                             }?>
                                                                 <tr>
                                                                     <td><?php $oldsectionsname == '';
-                                                                    if ($oldsectionsname != $sectionsdetails->name) {echo $sectionsdetails->name;?> - <?php 
-                                                                    echo $coursedetails->fullname;} ?></td>
+                                                                    if ($oldsectionsname != 
+                                                                    $sectionsdetails->name) {
+                                                                        echo $sectionsdetails->name;?> - <?php
+                                                                    echo $coursedetails->fullname;} ?
+                                                                    ></td>
                                                                     <td>
                                                                         <div class="tqs-left">
                                                                             <?php
