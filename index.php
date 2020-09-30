@@ -1014,7 +1014,7 @@ if ($_REQUEST['action'] == 'add') {
                                                                                 'workshop') {
                                                                                     $activitystartdates
                                                                                     = $valuefinal->submissionstart;
-                                                                                    $activityenddates= $valuefinal->submissionend;
+                                                                                    $activityenddates = $valuefinal->submissionend;
                                                                                 } else {
                                                                                     $activitystartdates = $coursedetails->startdate;
                                                                                     $activityenddates = $coursedetails->enddate;
@@ -1115,7 +1115,7 @@ if ($_REQUEST['action'] == 'add') {
                                                                                     <?php if (isset
                                                                                     ($valuefinal->questionsperpage)) {
                                                 $isquiz = $DB->get_record_sql("SELECT id FROM
-                                                {tool_leeloolxp_sync} 
+                                                {tool_leeloolxp_sync}
                                                 where activityid = '$activityids->id' and `is_quiz` = '1'");
 
                                                 if (!empty($isquiz)) {
@@ -1133,8 +1133,9 @@ if ($_REQUEST['action'] == 'add') {
                                                                                             class="quiz_sync_check" 
                                                                                             value="<?php 
                                                                                             echo $activityids->id; ?>"></td> 
-                                                                                            <?php } else {?> <td></td> <?php }
-                                                                                            ?>
+                                                                                            <?php 
+                                                                                    } else {?> <td></td> <?php 
+                                                                                    }?>
                                                                                     </tr>
 
 
