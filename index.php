@@ -574,16 +574,12 @@ if (isset($_REQUEST['sync_activities'])) {
                 $usertype = '';
                 $teamniorole = '';
                 $teamniousertype = '';
-
-                
                 $userdegree = $DB->get_record_sql("SELECT DISTINCT data  FROM {user_info_data}
                 as fdata left join {user_info_field} as fieldss on fdata.fieldid = fieldss.id
                 where fieldss.shortname = 'degree' and fdata.userid = '$moodeluservalue->userid'");
-
                 $userdegreename = $userdegree->data;
                 $userdepartment = $moodeluservalue->department;
                 $userinstitution = $moodeluservalue->institution;
-
                 $ssopluginconfig = get_config('leeloolxp_tracking_sso');
                 $studentnumcombinationsval = $ssopluginconfig->student_num_combination;
                 $studentdbsetarr = array();
@@ -680,7 +676,7 @@ if (isset($_REQUEST['sync_activities'])) {
                     $lastlogin = date('Y-m-d h:i:s', $moodeluservalue->lastlogin);
                     $moodleuserstudentarray[] = array(
                         'username' => $moodeluservalue->username,
-                        'fullname' => ucfirst($moodeluservalue->firstname) . " " . 
+                        'fullname' => ucfirst($moodeluservalue->firstname) . " " .
                         ucfirst($moodeluservalue->middlename) . " " . ucfirst($moodeluservalue->lastname),
                         'user_pic_moodle_url' => $moodleurlpic,
                         'email' => $moodeluservalue->email,
@@ -717,7 +713,7 @@ if (isset($_REQUEST['sync_activities'])) {
                 } else {
                     if ($usertype == 'teacher') {
                         $moodleuserteacherarray[] = array('username' => $moodeluservalue->username,
-                            'fullname' => ucfirst($moodeluservalue->firstname) . " " . 
+                            'fullname' => ucfirst($moodeluservalue->firstname) . " " .
                             ucfirst($moodeluservalue->middlename) . " " . ucfirst($moodeluservalue->lastname),
                             'user_pic_moodle_url' => $moodleurlpic,
                             'email' => $moodeluservalue->email,
@@ -791,14 +787,14 @@ if (isset($_REQUEST['sync_activities'])) {
                     $alreadyexistquery = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync}
                     where teamnio_task_id = '$teamniotaskid'");
                     if (empty($alreadyexistquery)) {
-                        $DB->execute("INSERT INTO {tool_leeloolxp_sync} 
-                        (`id`, `courseid`, `sectionid`, `activityid`, `enabled`, `teamnio_task_id`,`is_quiz`) 
+                        $DB->execute("INSERT INTO {tool_leeloolxp_sync}
+                        (`id`, `courseid`, `sectionid`, `activityid`, `enabled`, `teamnio_task_id`,`is_quiz`)
                         VALUES (NULL, '$courseid', '$sectionid', '$activityid', '1', '$teamniotaskid','0')");
                     }
                     $msg = 'Sychronizationed successfully.';
                 } else {
                     $activityidmoodlearr = $activityid;
-                    $DB->execute("Update {tool_leeloolxp_sync}  set `enabled` = '1' 
+                    $DB->execute("Update {tool_leeloolxp_sync}  set `enabled` = '1'
                     where activityid = '$activityidmoodlearr'");
                     $msg = 'Sychronizationed successfully.';
                 }
@@ -809,7 +805,7 @@ if (isset($_REQUEST['sync_activities'])) {
     }
     if (isset($_REQUEST['quiz_sync'])) {
         foreach ($_REQUEST['quiz_sync'] as $key => $value) {
-            $DB->execute("Update {tool_leeloolxp_sync}  set `is_quiz` = '1' 
+            $DB->execute("Update {tool_leeloolxp_sync}  set `is_quiz` = '1'
             where activityid = '$value'");
             $isqpost = [
                 'activity_id' => $value,
@@ -841,15 +837,17 @@ if (!isset($_REQUEST['action'])) {
 
     if (!empty($categories)) {
         foreach ($categories as $key => $catvalue) {
-            ?>
-        <div class="card">
+?>
+    <div class="card">
             <div class="card-header" id="heading<?php echo $catvalue->id; ?>">
                 <table>
                     <tr>
                         <td>
                             <button class="btn btn-link collapsed" 
-                            data-toggle="collapse" data-target="#collapse<?php echo $catvalue->id; ?>" 
-                            aria-expanded="false" aria-controls="collapse<?php echo $catvalue->id; ?>"><?php echo $catvalue->name; ?></button>
+                            data-toggle="collapse" 
+                            data-target="#collapse<?php echo $catvalue->id; ?>" 
+                            aria-expanded="false" aria-controls="collapse
+                            <?php echo $catvalue->id; ?>"><?php echo $catvalue->name; ?></button>
                         </td>
                         <td>Synced?</td>
                     </tr>
@@ -862,32 +860,34 @@ if (!isset($_REQUEST['action'])) {
                     <div class="card-table">
                         <table>
                             <?php
-$courses = $DB->get_records('course', array('category' => $catvalue->id));
-            if (!empty($courses)) {
-                foreach ($courses as $cours_key => $coursevalue) {
-                    ?>
-                                    <tr>
-                                        <td>
-                                            <div class="tqs-left">
-                                                <i class="fa fa-recycle"></i>
-                                                <span><?php echo $coursevalue->fullname; ?></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="tqs-right">
+                                $courses = $DB->get_records('course', array('category' => $catvalue->id));
+                                if (!empty($courses)) {
+                                    foreach ($courses as $courskey => $coursevalue) {
+?>
+                                        <tr>
+                                            <td>
+                                                <div class="tqs-left">
+                                                    <i class="fa fa-recycle"></i>
+                                                    <span><?php echo $coursevalue->fullname; ?></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="tqs-right">
                                                 <?php
-                    $alreadysync = false;
-                    $coursesyncedquery = $DB->get_records('tool_leeloolxp_sync', 
-                    array('courseid' => $coursevalue->id));
-                    if (!empty($coursesyncedquery)) {
-                        $alreadysync = true;
-                    }
-                    if ($alreadysync) {?>
+                                                    $alreadysync = false;
+                                                    $coursesyncedquery = $DB->get_records('tool_leeloolxp_sync',
+                                                    array('courseid' => $coursevalue->id));
+                                                    if (!empty($coursesyncedquery)) {
+                                                        $alreadysync = true;
+                                                    }
+                                                    if ($alreadysync) {
+?>
                                                     <span class="tqs-span-yes">Yes</span>
                                                     <?php } else {?>  <span class="tqs-span-no">No</span> <?php }?>
                                                     <ul>
                                                         <?php if ($alreadysync) {?>
-                                                            <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>?action=add&courseid=<?php echo $coursevalue->id; ?>">Edit</a></li>
+                                                            <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
+                                                            ?action=add&courseid=<?php echo $coursevalue->id; ?>">Edit</a></li>
                                                             <li><a href="#" onclick="UnsyncCourse('<?php echo $coursevalue->fullname; ?>','
                                                             <?php echo $coursevalue->id; ?>');">Unsync</a></li>
                                                             <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
