@@ -881,7 +881,11 @@ if (!empty($categories)) {
                                                 if ($alreadysync) {
 ?>
                                                     <span class="tqs-span-yes">Yes</span>
-                                                    <?}else{?><span class="tqs-span-no">No</span><?}?>
+                                                    <?php
+                                                } else {
+                                                    ?><span class="tqs-span-no">No</span><?php
+                                                }
+                                                    ?>
                                                     <ul>
                                                         <?php if ($alreadysync) {?>
                                                             <li><a href="<?php
