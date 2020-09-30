@@ -107,7 +107,7 @@ if (isset($_REQUEST['leelo_activity_data'])) {
                                                     $obj->submissionstart = $startdate;
                                                     $obj->submissionend = $enddate;
                                                     $DB->update_record('wespher', $obj);
-                                                } 
+                                                }
                                             }
                                         }
                                     }
@@ -253,7 +253,7 @@ if (isset($_REQUEST['resync_activity'])) {
     $courseid = $_REQUEST['course_id'];
     $coursedetails = $DB->get_record('course', array('id' => $courseid)); // Fetch all exist course from.
     $coursename = $coursedetails->fullname;
-    $table = 'course_sections'; // section table name.
+    $table = 'course_sections'; // Section table name.
     $sections = $DB->get_records($table, array('course' => $courseid)); // Fetch sections of each course.
     $course = get_course($courseid);
     $modinfo = get_fast_modinfo($course);
@@ -261,8 +261,8 @@ if (isset($_REQUEST['resync_activity'])) {
     if (!empty($sections)) {
         foreach ($sections as $sectionkey => $sectionsdetails) {
             if ($sectionsdetails->name != '') {
-                $modulescourse = $DB->get_records("course_modules", 
-                array('section' => $sectionsdetails->id)); // Fecth modules and instaced of modules
+                $modulescourse = $DB->get_records("course_modules",
+                array('section' => $sectionsdetails->id)); // Fecth modules and instaced of modules.
                 if (!empty($modulescourse)) {
                     foreach ($modulescourse as $coursemoduledetails) {
                         $moduleid = $coursemoduledetails->module;
@@ -271,12 +271,15 @@ if (isset($_REQUEST['resync_activity'])) {
                         if (!empty($modules)) {
                             foreach ($modules as $key => $value) {
                                 $tbl = $value->name;
-                                $moduledetail = $DB->get_records($tbl, 
-                                array('id' => $instance)); // Fetch activities and resources based on instance and module name table.
+                                $moduledetail = $DB->get_records($tbl,
+                                array('id' => $instance));// Fetch activities and resources.
                                 if (!empty($moduledetail)) {
                                     foreach ($moduledetail as $key => $valuefinal) {
-                                        $activityids = $DB->get_record('course_modules', array('instance' => $instance, 'module' => $moduleid));
-                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} where activityid = '$activityids->id' and enabled = '1'");
+                                        $activityids = $DB->get_record('course_modules',
+                                        array('instance' => $instance, 'module' => $moduleid));
+                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} 
+                                        where activityid = '$activityids->id' 
+                                        and enabled = '1'");
                                         $enabled = false;
                                         $enabled = true;
                                         $sectionsdetails->name;
@@ -367,11 +370,11 @@ if (isset($_REQUEST['resync_activity'])) {
 
 if (isset($_REQUEST['resync'])) {
     $courseid = $_REQUEST['courseid_resync'];
-    $coursedetails = $DB->get_record('course', array('id' => $courseid)); // fetch all exist course from
+    $coursedetails = $DB->get_record('course', array('id' => $courseid)); // Fetch all exist course from.
     $projectdescription = $coursedetails->summary;
     $idnumber = $coursedetails->idnumber;
     $coursename = $coursedetails->fullname;
-    $table = 'course_sections'; // section table name.
+    $table = 'course_sections'; // Section table name.
     $sections = $DB->get_records_sql("SELECT * FROM {course_sections} where course = '$courseid' and name != ''");
     $course = get_course($courseid);
     $modinfo = get_fast_modinfo($course);
@@ -379,21 +382,22 @@ if (isset($_REQUEST['resync'])) {
     if (!empty($sections)) {
         foreach ($sections as $sectionkey => $sectionsdetails) {
             if ($sectionsdetails->name != '') {
-                $modulescourse = $DB->get_records("course_modules", array('section' => $sectionsdetails->id)); // fecth modules and instaced of modules
+                $modulescourse = $DB->get_records("course_modules", array('section' => $sectionsdetails->id));
                 if (!empty($modulescourse)) {
                     foreach ($modulescourse as $coursemoduledetails) {
                         $moduleid = $coursemoduledetails->module;
                         $instance = $coursemoduledetails->instance;
-                        $modules = $DB->get_records("modules", array('id' => $moduleid)); // fetch modules for real table name\
+                        $modules = $DB->get_records("modules", array('id' => $moduleid));
                         if (!empty($modules)) {
                             foreach ($modules as $key => $value) {
                                 $tbl = $value->name;
-                                $moduledetail = $DB->get_records($tbl, array('id' => $instance)); // fetch activities and resources based on instance and module name table.
+                                $moduledetail = $DB->get_records($tbl, array('id' => $instance));
                                 if (!empty($moduledetail)) {
                                     foreach ($moduledetail as $key => $valuefinal) {
                                         $activityids = $DB->get_record('course_modules', array('instance' => $instance, 'module' => $moduleid));
 
-                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} where activityid = '$activityids->id' and enabled = '1'");
+                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} 
+                                        where activityid = '$activityids->id' and enabled = '1'");
                                         $enabled = false;
                                         $enabled = true;
                                         $sectionsdetails->name;
@@ -485,7 +489,8 @@ if (isset($_REQUEST['resync'])) {
 
 if (isset($_REQUEST['unsync_id']) && !empty($_REQUEST['unsync_id'])) {
     $activityidmoodlearr = $_REQUEST['unsync_id'];
-    $activitydetailsagain = $DB->get_record('tool_leeloolxp_sync', array('activityid' => $activityidmoodlearr)); // fetch all exist course from
+    $activitydetailsagain = $DB->get_record('tool_leeloolxp_sync', 
+    array('activityid' => $activityidmoodlearr));
     $taskid = $activitydetailsagain->teamnio_task_id;
     $post = ['task_id' => $taskid];
     $ch = curl_init($teamniourl . '/admin/sync_moodle_course/unsyncactivity');
@@ -495,7 +500,6 @@ if (isset($_REQUEST['unsync_id']) && !empty($_REQUEST['unsync_id'])) {
     curl_close($ch);
     $DB->execute("DELETE FROM {tool_leeloolxp_sync} where activityid = '$activityidmoodlearr'");
     $msg = 'Unsychronizationed successfully.';
-    // need to do delete activity from teamnio
 }
 
 if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
@@ -551,7 +555,12 @@ if (isset($_REQUEST['sync_activities'])) {
             Where e.courseid = '$courseidagain'");
 
             foreach ($enrolleduser as $key => $moodeluservalue) {
-                $sql = "SELECT r.shortname as shortname, r.id as roleid FROM {role_assignments} AS ra LEFT JOIN {user_enrolments} AS ue ON ra.userid = ue.userid LEFT JOIN {role} AS r ON ra.roleid = r.id LEFT JOIN {context} AS c ON c.id = ra.contextid LEFT JOIN {enrol} AS e ON e.courseid = c.instanceid AND ue.enrolid = e.id WHERE  ue.userid = '$moodeluservalue->userid' AND e.courseid = '$courseidagain'";
+                $sql = "SELECT r.shortname as shortname, r.id as roleid 
+                FROM {role_assignments} AS ra LEFT JOIN {user_enrolments} AS ue ON ra.userid = ue.userid 
+                LEFT JOIN {role} AS r ON ra.roleid = r.id LEFT JOIN {context} AS c 
+                ON c.id = ra.contextid LEFT JOIN {enrol} AS e ON e.courseid = c.instanceid 
+                AND ue.enrolid = e.id 
+                WHERE  ue.userid = '$moodeluservalue->userid' AND e.courseid = '$courseidagain'";
 
                 $roleresult = $DB->get_records_sql($sql);
 
@@ -566,7 +575,9 @@ if (isset($_REQUEST['sync_activities'])) {
                 $teamniousertype = '';
 
                 // get user custom field degree
-                $userdegree = $DB->get_record_sql("SELECT DISTINCT data  FROM {user_info_data} as fdata left join {user_info_field} as fieldss on fdata.fieldid = fieldss.id where fieldss.shortname = 'degree' and fdata.userid = '$moodeluservalue->userid'");
+                $userdegree = $DB->get_record_sql("SELECT DISTINCT data  FROM {user_info_data} 
+                as fdata left join {user_info_field} as fieldss on fdata.fieldid = fieldss.id 
+                where fieldss.shortname = 'degree' and fdata.userid = '$moodeluservalue->userid'");
 
                 $userdegreename = $userdegree->data;
                 $userdepartment = $moodeluservalue->department;
@@ -649,7 +660,9 @@ if (isset($_REQUEST['sync_activities'])) {
                     }
                 }
                 $enrolleduserid = $moodeluservalue->userid;
-                $groupsname = $DB->get_records_sql("SELECT * FROM `{groups}` as groups left join {groups_members} on {groups_members}.groupid = groups.id where groups.courseid = '$courseidagain' and {groups_members}.userid='$enrolleduserid'");
+                $groupsname = $DB->get_records_sql("SELECT * FROM `{groups}` as groups left join 
+                {groups_members} on {groups_members}.groupid = groups.id 
+                where groups.courseid = '$courseidagain' and {groups_members}.userid='$enrolleduserid'");
                 $usergroupsname = array();
                 if (!empty($groupsname)) {
                     foreach ($groupsname as $key => $gvalue) {
@@ -737,7 +750,7 @@ if (isset($_REQUEST['sync_activities'])) {
         $activityid = $activityidarr[3];
         $secctiondescription = $activityidarr[5];
         $activitydescription = $activityidarr[6];
-        $coursedetailsagain = $DB->get_record('course', array('id' => $courseidagain)); // fetch all exist course from
+        $coursedetailsagain = $DB->get_record('course', array('id' => $courseidagain));
         $groupname = '';
         $post = [
             'moodle_users_students' => json_encode($moodleuserstudentarray),
@@ -768,14 +781,17 @@ if (isset($_REQUEST['sync_activities'])) {
         if (!empty($response)) {
             foreach ($response as $key => $teamniotaskid) {
                 if ($teamniotaskid != '0') {
-                    $alreadyexistquery = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} where teamnio_task_id = '$teamniotaskid'");
+                    $alreadyexistquery = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} 
+                    where teamnio_task_id = '$teamniotaskid'");
                     if (empty($alreadyexistquery)) {
-                        $DB->execute("INSERT INTO {tool_leeloolxp_sync} (`id`, `courseid`, `sectionid`, `activityid`, `enabled`, `teamnio_task_id`,`is_quiz`) VALUES (NULL, '$courseid', '$sectionid', '$activityid', '1', '$teamniotaskid','0')");
+                        $DB->execute("INSERT INTO {tool_leeloolxp_sync} (`id`, `courseid`, `sectionid`, `activityid`, `enabled`, `teamnio_task_id`,`is_quiz`) 
+                        VALUES (NULL, '$courseid', '$sectionid', '$activityid', '1', '$teamniotaskid','0')");
                     }
                     $msg = 'Sychronizationed successfully.';
                 } else {
                     $activityidmoodlearr = $activityid;
-                    $DB->execute("Update {tool_leeloolxp_sync}  set `enabled` = '1' where activityid = '$activityidmoodlearr'");
+                    $DB->execute("Update {tool_leeloolxp_sync}  set `enabled` = '1' 
+                    where activityid = '$activityidmoodlearr'");
                     $msg = 'Sychronizationed successfully.';
                 }
             }
@@ -785,7 +801,8 @@ if (isset($_REQUEST['sync_activities'])) {
     }
     if (isset($_REQUEST['quiz_sync'])) {
         foreach ($_REQUEST['quiz_sync'] as $key => $value) {
-            $DB->execute("Update {tool_leeloolxp_sync}  set `is_quiz` = '1' where activityid = '$value'");
+            $DB->execute("Update {tool_leeloolxp_sync}  set `is_quiz` = '1' 
+            where activityid = '$value'");
             $isqpost = [
                 'activity_id' => $value,
             ];
@@ -812,7 +829,7 @@ if (!isset($_REQUEST['action'])) {
 
 <?php
 
-    $categories = $DB->get_records('course_categories', array()); // fetch all exist course from
+    $categories = $DB->get_records('course_categories', array());
 
     if (!empty($categories)) {
         foreach ($categories as $key => $catvalue) {
@@ -881,7 +898,7 @@ $courses = $DB->get_records('course', array('category' => $catvalue->id));
 
 
 
-<?php } // close action not set
+<?php }
 
 if (isset($_REQUEST['action'])) {
     ?>
@@ -892,26 +909,26 @@ if (isset($_REQUEST['action'])) {
 if ($_REQUEST['action'] == 'add') {
         $courseid = $_REQUEST['courseid'];
 
-        $coursedetails = $DB->get_record('course', array('id' => $courseid)); // fetch all exist course from
-        $table = 'course_sections'; // section table name.
-        $sections = $DB->get_records($table, array('course' => $courseid)); // fetch sections of each course.
+        $coursedetails = $DB->get_record('course', array('id' => $courseid));
+        $table = 'course_sections';
+        $sections = $DB->get_records($table, array('course' => $courseid));
         $course = get_course($courseid);
         $modinfo = get_fast_modinfo($course);
 
         if (!empty($sections)) {
             foreach ($sections as $sectionkey => $sectionsdetails) {
                 if ($sectionsdetails->name != '') {
-                    //$modules_course = $DB->get_records("course_modules", array('section' => $sections_details->id)); // fecth modules and instaced of modules
-                    $modules_course = $DB->get_records_sql("select * from {course_modules} where `section` = '" . $sectionsdetails->id . "' order by added DESC");
+                    $modules_course = $DB->get_records_sql("select * from 
+                    {course_modules} where `section` = '" . $sectionsdetails->id . "' order by added DESC");
                     if (!empty($modulescourse)) {
                         foreach ($modulescourse as $coursemoduledetails) {
                             $moduleid = $coursemoduledetails->module;
                             $instance = $coursemoduledetails->instance;
-                            $modules = $DB->get_records("modules", array('id' => $module_id)); // fetch modules for real table name\
+                            $modules = $DB->get_records("modules", array('id' => $module_id));
                             if (!empty($modules)) {
                                 foreach ($modules as $key => $value) {
                                     $tbl = $value->name;
-                                    $moduledetail = $DB->get_records($tbl, array('id' => $instance)); // fetch activities and resources based on instance and module name table.
+                                    $moduledetail = $DB->get_records($tbl, array('id' => $instance));
                                     if (!empty($moduledetail)) {
                                         foreach ($moduledetail as $key => $valuefinal) {
                                             if ($tbl == 'lesson') {
@@ -966,8 +983,10 @@ if ($_REQUEST['action'] == 'add') {
                                                     }
                                                 }
                                             }
-                                            $activityids = $DB->get_record('course_modules', array('instance' => $instance, 'module' => $moduleid));
-                                            $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} where activityid = '$activityids->id' and enabled = '1'");
+                                            $activityids = $DB->get_record('course_modules', 
+                                            array('instance' => $instance, 'module' => $moduleid));
+                                            $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} 
+                                            where activityid = '$activityids->id' and enabled = '1'");
                                             $enabled = false;
 
                                             if (!empty($alreadyenabled)) {
@@ -1028,13 +1047,13 @@ $cm = $modinfo->cms[$activityids->id];
 
 
                                                                             <?php
-} // loop close for activity and resources
-                                    } // if close for module_detail
-                                } //  loop close for  modules.
-                            } // single module condition close
-                        } // modules_course loop
-                    } // modules_course  condition
-                } // section name black if clsoe (codition)
+}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }?>
