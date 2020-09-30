@@ -1134,7 +1134,7 @@ if ($_REQUEST['action'] == 'add') {
                                                                                             value="<?php
                                                                                             echo $activityids->id; ?>"></td> 
                                                                                             <?php
-                                                                                    }else 
+                                                                                    }else
                                                                                     {?> 
                                                                                         <td></td> 
                                                                                         <?php
