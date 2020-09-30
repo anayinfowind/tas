@@ -1047,7 +1047,7 @@ if ($_REQUEST['action'] == 'add') {
                                             }
 
                                             echo $icon;?>
-                                                                            <span><?php $oldsectionsname = $sectionsdetails->name;
+                                            <span><?php $oldsectionsname = $sectionsdetails->name;
                                             echo $valuefinal->name;?></span>
                                                                         </div>
                                                                     </td>
@@ -1055,22 +1055,28 @@ if ($_REQUEST['action'] == 'add') {
                                                                         <div class="tqs-right">
                                                                             <span class="tqs-span-<?php if ($enabled) {
                                                                                 echo "yes";} else {echo "no";}?>">
-                                                                                <?php if ($enabled) {echo "Yes";} else {echo "No";}?> </span>
+                                                                                <?php if ($enabled) {echo "Yes";} else {
+                                                                                    echo "No";}?> </span>
                                                                             <ul>
-                                                                                <?php $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                                            if ($enabled) {
+                                                                            <?php $url = parse_url($_SERVER['REQUEST_URI', 
+                                                                                PHP_URL_PATH);
+                                                                                if ($enabled) {
                                                 ?>
                                                                                         <li><a  href="
-                                                                                        <?php echo $url; ?>?resync_activity=1&activity_id=<?php
+                                                                                        <?php echo $url; ?>?resync_activity=1&
+                                                                                        activity_id=<?php
                                                                                         echo $activityids->id; ?>
                                                                                         &activity_name=
-                                                                                        <?php echo $valuefinal->name ?>&course_id=
-                                                                                        <?php echo $_REQUEST['courseid']; ?>">Resync</a></li>
-
-                                                                                     <?php
+                                                                                        <?php echo $valuefinal->name ?>&
+                                                                                        course_id=
+                                                                                        <?php echo $_REQUEST['courseid'];
+                                                                                        ?>">Resync</a></li>
+                                                                                        <?php
 }
                                             if ($enabled) {?>
-                                                                                        <li><a onclick="UnsyncActivity('<?php echo $activityids->id; ?>')" href="#">Unsync</a></li><?php } else {
+                                                                                        <li><a onclick="UnsyncActivity('<?php 
+                                                                                        echo $activityids->id; ?>')" 
+                                                                                        href="#">Unsync</a></li><?php } else {
                                                 $querystring = $coursedetails->fullname . "$$" . 
                                                 $sectionsdetails->name . "$$" . $valuefinal->name . "$$" .
                                                 $activityids->id . "$$" . $courseid . "$$" .
@@ -1078,12 +1084,18 @@ if ($_REQUEST['action'] == 'add') {
                                                 strip_tags($valuefinal->intro . "$$" . 
                                                 $activitystartdates . "$$" .
                                                 $activityenddates . "$$" . $tbl . "$$" . $iconurl);?>
-                                                                                            <li><input class="all_activity_checkbox_single" type="checkbox" name="all_activities[]" value="<?php echo str_replace('"', '', $querystring); ?>"></li>
+                                                                                            <li><input 
+                                                                                            class="all_activity_checkbox_singl
+                                                                                            e" type="checkbox" 
+                                                                                            name="all_activities[]" value="<?
+                                                                                            php echo str_replace('"', '', 
+                                                                                            $querystring); ?>"></li>
                                                                                             <?php }?>
                                                                                         </ul>
                                                                                     </div>
                                                                                     </td>
-                                                                                    <?php if (isset($valuefinal->questionsperpage)) {
+                                                                                    <?php if (isset
+                                                                                    ($valuefinal->questionsperpage)) {
                                                 $isquiz = $DB->get_record_sql("SELECT id FROM 
                                                 {tool_leeloolxp_sync} 
                                                 where activityid = '$activityids->id' and `is_quiz` = '1'");
@@ -1094,12 +1106,17 @@ if ($_REQUEST['action'] == 'add') {
                                                         $checked = false;
                                                         }
                                                 ?>
-                                                                                        <td style="text-align: center"> <input type="checkbox" 
+                                                                                        <td style="text-align: center"> 
+                                                                                        <input type="checkbox" 
                                                                                         <?php if ($checked) {
                                                                                             echo "checked='checked'";
                                                                                             }?> 
-                                                                                            name="quiz_sync[]" class="quiz_sync_check" 
-                                                                                            value="<?php echo $activityids->id; ?>"></td> <?php } else {?> <td></td> <?php }?>
+                                                                                            name="quiz_sync[]" 
+                                                                                            class="quiz_sync_check" 
+                                                                                            value="<?php 
+                                                                                            echo $activityids->id; ?>"></td> 
+                                                                                            <?php } else {?> <td></td> <?php }
+                                                                                            ?>
                                                                                     </tr>
 
 
