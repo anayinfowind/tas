@@ -23,8 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 define('NO_OUTPUT_BUFFERING', true);
-require (__DIR__ . '/../../../config.php');
-require_once ($CFG->libdir . '/adminlib.php');
+require(__DIR__ . '/../../../config.php');
+require_once($CFG->libdir . '/adminlib.php');
 global $DB;
 if (isset($_REQUEST['leelo_activity_data'])) {
     $courseid = $_REQUEST['course_id'];
@@ -61,54 +61,53 @@ if (isset($_REQUEST['leelo_activity_data'])) {
                         $obj->duedate = $enddate;
                         $DB->update_record('assign', $obj);
                     } else {
-                        if ($module_name == 'chat') {
+                        if ($modulename == 'chat') {
                             $obj = new stdClass();
                             $obj->id = $isntanceid;
                             $obj->chattime = $startdate;
                             $DB->update_record('chat', $obj);
                         } else {
-                            if ($module_name == 'choice') {
+                            if ($modulename == 'choice') {
                                 $obj = new stdClass();
                                 $obj->id = $isntanceid;
                                 $obj->timeopen = $startdate;
                                 $obj->timeclose = $enddate;
                                 $DB->update_record('choice', $obj);
                             } else {
-                                if ($module_name == 'data') {
+                                if ($modulename == 'data') {
                                     $obj = new stdClass();
                                     $obj->id = $isntanceid;
                                     $obj->timeavailablefrom = $startdate;
                                     $obj->timeavailableto = $enddate;
                                     $DB->update_record('data', $obj);
                                 } else {
-                                    if ($module_name == 'feedback') {
+                                    if ($modulename == 'feedback') {
                                         $obj = new stdClass();
                                         $obj->id = $isntanceid;
                                         $obj->timeopen = $startdate;
                                         $obj->timeclose = $enddate;
                                         $DB->update_record('feedback', $obj);
                                     } else {
-                                        if ($module_name == 'forum') {
+                                        if ($modulename == 'forum') {
                                             $obj = new stdClass();
                                             $obj->id = $isntanceid;
                                             $obj->duedate = $startdate;
                                             $obj->cutoffdate = $enddate;
                                             $DB->update_record('forum', $obj);
                                         } else {
-                                            if ($module_name == 'wespher') {
+                                            if ($modulename == 'wespher') {
                                                 $obj = new stdClass();
                                                 $obj->id = $isntanceid;
                                                 $obj->timeopen = $startdate;
                                                 $DB->update_record('wespher', $obj);
                                             } else {
-                                                if ($module_name == 'workshop') {
+                                                if ($modulename == 'workshop') {
                                                     $obj = new stdClass();
-                                                    $obj->id = $isntance_id;
-                                                    $obj->submissionstart = $start_date;
-                                                    $obj->submissionend = $end_date;
+                                                    $obj->id = $isntanceid;
+                                                    $obj->submissionstart = $startdate;
+                                                    $obj->submissionend = $enddate;
                                                     $DB->update_record('wespher', $obj);
-                                                } else {
-                                                }
+                                                } 
                                             }
                                         }
                                     }
@@ -123,12 +122,12 @@ if (isset($_REQUEST['leelo_activity_data'])) {
     echo "success";die;
 }
 if (isset($_REQUEST['leelo_data'])) {
-    $course_id = $_REQUEST['course_id'];
-    $Cobj = new stdClass();
-    $Cobj->id = $course_id;
-    $Cobj->startdate = strtotime($_REQUEST['project_start_date']);
-    $Cobj->enddate = strtotime($_REQUEST['project_end_date']);
-    $DB->update_record('course', $Cobj);
+    $courseid = $_REQUEST['course_id'];
+    $cobj = new stdClass();
+    $cobj->id = $courseid;
+    $cobj->startdate = strtotime($_REQUEST['project_start_date']);
+    $cobj->enddate = strtotime($_REQUEST['project_end_date']);
+    $DB->update_record('course', $cobj);
     $activities = json_decode($_REQUEST['leelo_data'], true);
     if (!empty($activities)) {
         foreach ($activities as $key => $value) {
@@ -142,7 +141,7 @@ if (isset($_REQUEST['leelo_data'])) {
             $modulenames = $DB->get_record_sql("SELECT name FROM {modules} where id = '$moduleid'");
             $modulename = $modulenames->name;
             $tbl = $modulename;
-            if ($module_name == 'lesson') {
+            if ($modulename == 'lesson') {
                 $obj = new stdClass();
                 $obj->id = $isntanceid;
                 $obj->deadline = $enddate;
@@ -205,7 +204,7 @@ if (isset($_REQUEST['leelo_data'])) {
                                             } else {
                                                 if ($tbl == 'workshop') {
                                                     $obj = new stdClass();
-                                                    $obj->id = $isntance_id;
+                                                    $obj->id = $isntanceid;
                                                     $obj->submissionstart = $startdate;
                                                     $obj->submissionend = $enddate;
                                                     $DB->update_record('wespher', $obj);
@@ -237,8 +236,8 @@ $url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HEADER, false);
-curl_setopt($ch, CURLOPT_POST, count($postData));
-curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+curl_setopt($ch, CURLOPT_POST, count($postdata));
+curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
 $output = curl_exec($ch);
 curl_close($ch);
 $infoteamnio = json_decode($output);
@@ -252,34 +251,36 @@ if (isset($_REQUEST['resync_activity'])) {
     $activityid = $_REQUEST['activity_id'];
     $activityname = $_REQUEST['activity_name'];
     $courseid = $_REQUEST['course_id'];
-    $coursedetails = $DB->get_record('course', array('id' => $courseid)); // fetch all exist course from
-    $coursename = $course_details->fullname;
+    $coursedetails = $DB->get_record('course', array('id' => $courseid)); // Fetch all exist course from.
+    $coursename = $coursedetails->fullname;
     $table = 'course_sections'; // section table name.
-    $sections = $DB->get_records($table, array('course' => $courseid)); // fetch sections of each course.
+    $sections = $DB->get_records($table, array('course' => $courseid)); // Fetch sections of each course.
     $course = get_course($courseid);
     $modinfo = get_fast_modinfo($course);
     $arrmain = array();
     if (!empty($sections)) {
-        foreach ($sections as $section_key => $sectionsdetails) {
+        foreach ($sections as $sectionkey => $sectionsdetails) {
             if ($sectionsdetails->name != '') {
-                $modulescourse = $DB->get_records("course_modules", array('section' => $sectionsdetails->id)); // fecth modules and instaced of modules
+                $modulescourse = $DB->get_records("course_modules", 
+                array('section' => $sectionsdetails->id)); // Fecth modules and instaced of modules
                 if (!empty($modulescourse)) {
                     foreach ($modulescourse as $coursemoduledetails) {
                         $moduleid = $coursemoduledetails->module;
                         $instance = $coursemoduledetails->instance;
-                        $modules = $DB->get_records("modules", array('id' => $moduleid)); // fetch modules for real table name\
+                        $modules = $DB->get_records("modules", array('id' => $moduleid)); // Fetch modules for real table name.
                         if (!empty($modules)) {
                             foreach ($modules as $key => $value) {
                                 $tbl = $value->name;
-                                $moduledetail = $DB->get_records($tbl, array('id' => $instance)); // fetch activities and resources based on instance and module name table.
+                                $moduledetail = $DB->get_records($tbl, 
+                                array('id' => $instance)); // Fetch activities and resources based on instance and module name table.
                                 if (!empty($moduledetail)) {
                                     foreach ($moduledetail as $key => $valuefinal) {
                                         $activityids = $DB->get_record('course_modules', array('instance' => $instance, 'module' => $moduleid));
-                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} where activityid = '$activity_ids->id' and enabled = '1'");
+                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} where activityid = '$activityids->id' and enabled = '1'");
                                         $enabled = false;
                                         $enabled = true;
                                         $sectionsdetails->name;
-                                        $cm = $modinfo->cms[$activity_ids->id];
+                                        $cm = $modinfo->cms[$activityids->id];
                                         $oldsectionsname = $sectionsdetails->name;
 
                                         if ($tbl == 'lesson') {
@@ -335,7 +336,7 @@ if (isset($_REQUEST['resync_activity'])) {
                                             }
                                         }
                                         if ($activityids->id == $activityid) {
-                                            $activitystart_dates = $activitystartdate;
+                                            $activitystartdates = $activitystartdate;
                                             $activityenddates = $activityenddate;
                                             $activitytype = $tbl;
                                         }
@@ -451,15 +452,17 @@ if (isset($_REQUEST['resync'])) {
                                                 }
                                             }
                                         }
-
-                                        $arrmain[$activityids->id] = array('name' => $valuefinal->name, 'activity_start_date' => $activitystartdates, 'activity_end_date' => $activityenddates);
-                                    } // loop close for activity and resources
-                                } // if close for module_detail
-                            } //  loop close for  modules.
-                        } // single module condition close
-                    } // modules_course loop
-                } // modules_course  condition
-            } // section name black if clsoe (codition)
+                                        $arrmain[$activityids->id] = 
+                                        array('name' => $valuefinal->name, 
+                                        'activity_start_date' => $activitystartdates,
+                                        'activity_end_date' => $activityenddates);
+                                    } // Loop close for activity and resources.
+                                } // If close for module_detail.
+                            } //  Loop close for  modules.
+                        } // Single module condition close.
+                    } // Modules_course loop.
+                } // Modules_course  condition.
+            } // section name black if clsoe (codition).
         }
     }
     $post = [
@@ -485,7 +488,7 @@ if (isset($_REQUEST['unsync_id']) && !empty($_REQUEST['unsync_id'])) {
     $activitydetailsagain = $DB->get_record('tool_leeloolxp_sync', array('activityid' => $activityidmoodlearr)); // fetch all exist course from
     $taskid = $activitydetailsagain->teamnio_task_id;
     $post = ['task_id' => $taskid];
-    $ch = curl_init($teamnio_url . '/admin/sync_moodle_course/unsyncactivity');
+    $ch = curl_init($teamniourl . '/admin/sync_moodle_course/unsyncactivity');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
     $response = curl_exec($ch);
@@ -536,14 +539,16 @@ if (isset($_REQUEST['sync_activities'])) {
         $activityidarr = explode('$$', $activityset);
         $courseidagain = $activityidarr[4];
         $activitystartdate = $activityidarr[7];
-        $activityend_date = $activityidarr[8];
+        $activityenddate = $activityidarr[8];
         $activitytype = $activityidarr[9];
         $activityurl = $activityidarr[10];
-
-        // enrolled users and sync with Leeloo   //
-
         if ($i == '0') {
-            $enrolleduser = $DB->get_records_sql("SELECT u.*, ue.id, e.courseid, ue.userid, e.enrol AS enrolmethod, FROM_UNIXTIME(ue.timecreated) FROM {user_enrolments} ue JOIN {enrol} e ON e.id = ue.enrolid AND e.status = 0 JOIN {user} u ON u.id = ue.userid AND u.deleted = 0 AND u.suspended = 0 Where e.courseid = '$courseidagain'");
+            $enrolleduser = $DB->get_records_sql("SELECT u.*, ue.id, e.courseid, ue.userid, e.enrol 
+            AS enrolmethod, FROM_UNIXTIME(ue.timecreated) 
+            FROM {user_enrolments} ue JOIN {enrol} e ON e.id = ue.enrolid 
+            AND e.status = 0 JOIN {user} u ON u.id = ue.userid 
+            AND u.deleted = 0 AND u.suspended = 0 
+            Where e.courseid = '$courseidagain'");
 
             foreach ($enrolleduser as $key => $moodeluservalue) {
                 $sql = "SELECT r.shortname as shortname, r.id as roleid FROM {role_assignments} AS ra LEFT JOIN {user_enrolments} AS ue ON ra.userid = ue.userid LEFT JOIN {role} AS r ON ra.roleid = r.id LEFT JOIN {context} AS c ON c.id = ra.contextid LEFT JOIN {enrol} AS e ON e.courseid = c.instanceid AND ue.enrolid = e.id WHERE  ue.userid = '$moodeluservalue->userid' AND e.courseid = '$courseidagain'";
@@ -564,7 +569,7 @@ if (isset($_REQUEST['sync_activities'])) {
                 $userdegree = $DB->get_record_sql("SELECT DISTINCT data  FROM {user_info_data} as fdata left join {user_info_field} as fieldss on fdata.fieldid = fieldss.id where fieldss.shortname = 'degree' and fdata.userid = '$moodeluservalue->userid'");
 
                 $userdegreename = $userdegree->data;
-                $user_department = $moodeluservalue->department;
+                $userdepartment = $moodeluservalue->department;
                 $userinstitution = $moodeluservalue->institution;
 
                 $ssopluginconfig = get_config('leeloolxp_tracking_sso');
@@ -583,10 +588,10 @@ if (isset($_REQUEST['sync_activities'])) {
                     $studentdegree = 'student_degree_' . $si;
                     $mstudentdegree = $ssopluginconfig->$studentdegree;
 
-                    $studentdbsetarr[$si] = $mstudent_role . "_" . $mstudentinstitution . "_" . $mstudentdepartment . "_" . $mstudentdegree;
+                    $studentdbsetarr[$si] = $mstudentrole . "_" . $mstudentinstitution . "_" . $mstudentdepartment . "_" . $mstudentdegree;
                 }
 
-                $userstudentinfo = $roleid . "_" . $user_institution . "_" . $user_department . "_" . $user_degree_name;
+                $userstudentinfo = $roleid . "_" . $userinstitution . "_" . $userdepartment . "_" . $userdegreename;
 
                 $matchedvalue = array_search($userstudentinfo, $studentdbsetarr);
 
@@ -842,9 +847,11 @@ $courses = $DB->get_records('course', array('category' => $catvalue->id));
                                         <td>
                                             <div class="tqs-right">
                                                 <?php
-$alreadysync = false;
+                    $alreadysync = false;
                     $coursesyncedquery = $DB->get_records('tool_leeloolxp_sync', array('courseid' => $coursevalue->id));
-                    if (!empty($coursesyncedquery)) {$alreadysync = true;}
+                    if (!empty($coursesyncedquery)) {
+                        $alreadysync = true;
+                    }
                     if ($alreadysync) {?>
                                                     <span class="tqs-span-yes">Yes</span>
                                                     <?php } else {?>  <span class="tqs-span-no">No</span> <?php }?>
