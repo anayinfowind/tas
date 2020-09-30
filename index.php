@@ -886,16 +886,24 @@ if (!isset($_REQUEST['action'])) {
                                                     <?php } else {?>  <span class="tqs-span-no">No</span> <?php }?>
                                                     <ul>
                                                         <?php if ($alreadysync) {?>
-                                                            <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                                                            ?action=add&courseid=<?php echo $coursevalue->id; ?>">Edit</a></li>
-                                                            <li><a href="#" onclick="UnsyncCourse('<?php echo $coursevalue->fullname; ?>','
-                                                            <?php echo $coursevalue->id; ?>');">Unsync</a></li>
-                                                            <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                                                            ?resync=resync&courseid_resync=<?php echo $coursevalue->id; ?>">Resync</a></li>
+                                                            <li><a href="<?php 
+                                                                echo parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH); ?>
+                                                                ?action=add&courseid=<?php echo $coursevalue->id; ?>">
+                                                                Edit</a></li>
+                                                            <li>
+                                                                <a href="#" onclick="UnsyncCourse('<?php echo $coursevalue->fullname; ?>
+                                                                ','<?php echo $coursevalue->id; ?>');">
+                                                                Unsync</a></li>
+                                                            <li>
+                                                                <a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>?resync=resync&courseid_resync=<?php 
+                                                                echo $coursevalue->id; ?>">
+                                                                Resync</a></li>
                                                             <?php } else {?>
                                                                 <li>
-                                                                <a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                                                                ?action=add&courseid=<?php echo $coursevalue->id; ?>">Add</a></li>
+                                                                    <a href="<?php 
+                                                                    echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
+                                                                ?action=add&courseid=<?php 
+                                                                echo $coursevalue->id; ?>">Add</a></li>
                                                                 <?php }?>
                                                     </ul>
                                                 </div>
