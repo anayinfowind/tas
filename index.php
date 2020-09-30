@@ -835,8 +835,8 @@ if (!isset($_REQUEST['action'])) {
 
     $categories = $DB->get_records('course_categories', array());
 
-    if (!empty($categories)) {
-        foreach ($categories as $key => $catvalue) {
+if (!empty($categories)) {
+    foreach ($categories as $key => $catvalue) {
 ?>
     <div class="card">
             <div class="card-header" id="heading<?php echo $catvalue->id; ?>">
@@ -861,8 +861,8 @@ if (!isset($_REQUEST['action'])) {
                         <table>
                             <?php
                                 $courses = $DB->get_records('course', array('category' => $catvalue->id));
-                                if (!empty($courses)) {
-                                    foreach ($courses as $courskey => $coursevalue) {
+                        if (!empty($courses)) {
+                            foreach ($courses as $courskey => $coursevalue) {
 ?>
                                         <tr>
                                             <td>
@@ -877,13 +877,13 @@ if (!isset($_REQUEST['action'])) {
                                                     $alreadysync = false;
                                                     $coursesyncedquery = $DB->get_records('tool_leeloolxp_sync',
                                                     array('courseid' => $coursevalue->id));
-                                                    if (!empty($coursesyncedquery)) {
-                                                        $alreadysync = true;
-                                                    }
-                                                    if ($alreadysync) {
+                                    if (!empty($coursesyncedquery)) {
+                                            $alreadysync = true;
+                                    }
+                                    if ($alreadysync) {
 ?>
                                                     <span class="tqs-span-yes">Yes</span>
-                                                    <?php } else {?>  <span class="tqs-span-no">No</span> <?php }?>
+                                                    <?php}else{?><span class="tqs-span-no">No</span><?php}?>
                                                     <ul>
                                                         <?php if ($alreadysync) {?>
                                                             <li><a href="<?php 
@@ -891,7 +891,8 @@ if (!isset($_REQUEST['action'])) {
                                                                 ?action=add&courseid=<?php echo $coursevalue->id; ?>">
                                                                 Edit</a></li>
                                                             <li>
-                                                                <a href="#" onclick="UnsyncCourse('<?php echo $coursevalue->fullname; ?>
+                                                                <a href="#" onclick="UnsyncCourse('<?php 
+                                                                echo $coursevalue->fullname; ?>
                                                                 ','<?php echo $coursevalue->id; ?>');">
                                                                 Unsync</a></li>
                                                             <li>
