@@ -277,8 +277,8 @@ if (isset($_REQUEST['resync_activity'])) {
                                     foreach ($moduledetail as $key => $valuefinal) {
                                         $activityids = $DB->get_record('course_modules',
                                         array('instance' => $instance, 'module' => $moduleid));
-                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} 
-                                        where activityid = '$activityids->id' 
+                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync}
+                                        where activityid = '$activityids->id'
                                         and enabled = '1'");
                                         $enabled = false;
                                         $enabled = true;
@@ -394,9 +394,10 @@ if (isset($_REQUEST['resync'])) {
                                 $moduledetail = $DB->get_records($tbl, array('id' => $instance));
                                 if (!empty($moduledetail)) {
                                     foreach ($moduledetail as $key => $valuefinal) {
-                                        $activityids = $DB->get_record('course_modules', array('instance' => $instance, 'module' => $moduleid));
+                                        $activityids = $DB->get_record('course_modules',
+                                        array('instance' => $instance, 'module' => $moduleid));
 
-                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} 
+                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync}
                                         where activityid = '$activityids->id' and enabled = '1'");
                                         $enabled = false;
                                         $enabled = true;
@@ -456,8 +457,8 @@ if (isset($_REQUEST['resync'])) {
                                                 }
                                             }
                                         }
-                                        $arrmain[$activityids->id] = 
-                                        array('name' => $valuefinal->name, 
+                                        $arrmain[$activityids->id] =
+                                        array('name' => $valuefinal->name,
                                         'activity_start_date' => $activitystartdates,
                                         'activity_end_date' => $activityenddates);
                                     } // Loop close for activity and resources.
@@ -489,7 +490,7 @@ if (isset($_REQUEST['resync'])) {
 
 if (isset($_REQUEST['unsync_id']) && !empty($_REQUEST['unsync_id'])) {
     $activityidmoodlearr = $_REQUEST['unsync_id'];
-    $activitydetailsagain = $DB->get_record('tool_leeloolxp_sync', 
+    $activitydetailsagain = $DB->get_record('tool_leeloolxp_sync',
     array('activityid' => $activityidmoodlearr));
     $taskid = $activitydetailsagain->teamnio_task_id;
     $post = ['task_id' => $taskid];
@@ -516,7 +517,7 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 
 if (isset($_REQUEST['course_id_date']) && !empty($_REQUEST['course_id_date'])) {
     $courseidagain = $_REQUEST['course_id_date'];
-    $coursedetailsagain = $DB->get_record('course', array('id' => $courseidagain)); // fetch all exist course from
+    $coursedetailsagain = $DB->get_record('course', array('id' => $courseidagain));
     $post = [
         'course_id' => $coursedetailsagain->id,
         'startdate' => $coursedetailsagain->startdate,
@@ -547,19 +548,19 @@ if (isset($_REQUEST['sync_activities'])) {
         $activitytype = $activityidarr[9];
         $activityurl = $activityidarr[10];
         if ($i == '0') {
-            $enrolleduser = $DB->get_records_sql("SELECT u.*, ue.id, e.courseid, ue.userid, e.enrol 
-            AS enrolmethod, FROM_UNIXTIME(ue.timecreated) 
-            FROM {user_enrolments} ue JOIN {enrol} e ON e.id = ue.enrolid 
-            AND e.status = 0 JOIN {user} u ON u.id = ue.userid 
-            AND u.deleted = 0 AND u.suspended = 0 
+            $enrolleduser = $DB->get_records_sql("SELECT u.*, ue.id, e.courseid, ue.userid, e.enrol
+            AS enrolmethod, FROM_UNIXTIME(ue.timecreated)
+            FROM {user_enrolments} ue JOIN {enrol} e ON e.id = ue.enrolid
+            AND e.status = 0 JOIN {user} u ON u.id = ue.userid
+            AND u.deleted = 0 AND u.suspended = 0
             Where e.courseid = '$courseidagain'");
 
             foreach ($enrolleduser as $key => $moodeluservalue) {
-                $sql = "SELECT r.shortname as shortname, r.id as roleid 
-                FROM {role_assignments} AS ra LEFT JOIN {user_enrolments} AS ue ON ra.userid = ue.userid 
-                LEFT JOIN {role} AS r ON ra.roleid = r.id LEFT JOIN {context} AS c 
-                ON c.id = ra.contextid LEFT JOIN {enrol} AS e ON e.courseid = c.instanceid 
-                AND ue.enrolid = e.id 
+                $sql = "SELECT r.shortname as shortname, r.id as roleid
+                FROM {role_assignments} AS ra LEFT JOIN {user_enrolments} AS ue ON ra.userid = ue.userid
+                LEFT JOIN {role} AS r ON ra.roleid = r.id LEFT JOIN {context} AS c
+                ON c.id = ra.contextid LEFT JOIN {enrol} AS e ON e.courseid = c.instanceid
+                AND ue.enrolid = e.id
                 WHERE  ue.userid = '$moodeluservalue->userid' AND e.courseid = '$courseidagain'";
 
                 $roleresult = $DB->get_records_sql($sql);
@@ -574,9 +575,9 @@ if (isset($_REQUEST['sync_activities'])) {
                 $teamniorole = '';
                 $teamniousertype = '';
 
-                // get user custom field degree
-                $userdegree = $DB->get_record_sql("SELECT DISTINCT data  FROM {user_info_data} 
-                as fdata left join {user_info_field} as fieldss on fdata.fieldid = fieldss.id 
+                
+                $userdegree = $DB->get_record_sql("SELECT DISTINCT data  FROM {user_info_data}
+                as fdata left join {user_info_field} as fieldss on fdata.fieldid = fieldss.id
                 where fieldss.shortname = 'degree' and fdata.userid = '$moodeluservalue->userid'");
 
                 $userdegreename = $userdegree->data;
@@ -599,10 +600,12 @@ if (isset($_REQUEST['sync_activities'])) {
                     $studentdegree = 'student_degree_' . $si;
                     $mstudentdegree = $ssopluginconfig->$studentdegree;
 
-                    $studentdbsetarr[$si] = $mstudentrole . "_" . $mstudentinstitution . "_" . $mstudentdepartment . "_" . $mstudentdegree;
+                    $studentdbsetarr[$si] = $mstudentrole . "_" .
+                    $mstudentinstitution . "_" . $mstudentdepartment . "_" . $mstudentdegree;
                 }
 
-                $userstudentinfo = $roleid . "_" . $userinstitution . "_" . $userdepartment . "_" . $userdegreename;
+                $userstudentinfo = $roleid . "_" . $userinstitution . "_" .
+                $userdepartment . "_" . $userdegreename;
 
                 $matchedvalue = array_search($userstudentinfo, $studentdbsetarr);
 
@@ -633,10 +636,12 @@ if (isset($_REQUEST['sync_activities'])) {
 
                         $mteacherdegree = $ssopluginconfig->$teacherdegree;
 
-                        $teacherdbsetarr[$si] = $mteacherrole . "_" . $mteacherinstitution . "_" . $mteacherdepartment . "_" . $mteacherdegree;
+                        $teacherdbsetarr[$si] = $mteacherrole . "_" .
+                        $mteacherinstitution . "_" . $mteacherdepartment . "_" . $mteacherdegree;
                     }
 
-                    $userteacherinfo = $roleid . "_" . $userinstitution . "_" . $userdepartment . "_" . $userdegreename;
+                    $userteacherinfo = $roleid . "_" . $userinstitution . "_" .
+                    $userdepartment . "_" . $userdegreename;
                     $matchedvalueteacher = array_search($userteacherinfo, $teacherdbsetarr);
 
                     if ($matchedvalueteacher) {
@@ -660,8 +665,8 @@ if (isset($_REQUEST['sync_activities'])) {
                     }
                 }
                 $enrolleduserid = $moodeluservalue->userid;
-                $groupsname = $DB->get_records_sql("SELECT * FROM `{groups}` as groups left join 
-                {groups_members} on {groups_members}.groupid = groups.id 
+                $groupsname = $DB->get_records_sql("SELECT * FROM `{groups}` as groups left join
+                {groups_members} on {groups_members}.groupid = groups.id
                 where groups.courseid = '$courseidagain' and {groups_members}.userid='$enrolleduserid'");
                 $usergroupsname = array();
                 if (!empty($groupsname)) {
@@ -675,7 +680,8 @@ if (isset($_REQUEST['sync_activities'])) {
                     $lastlogin = date('Y-m-d h:i:s', $moodeluservalue->lastlogin);
                     $moodleuserstudentarray[] = array(
                         'username' => $moodeluservalue->username,
-                        'fullname' => ucfirst($moodeluservalue->firstname) . " " . ucfirst($moodeluservalue->middlename) . " " . ucfirst($moodeluservalue->lastname),
+                        'fullname' => ucfirst($moodeluservalue->firstname) . " " . 
+                        ucfirst($moodeluservalue->middlename) . " " . ucfirst($moodeluservalue->lastname),
                         'user_pic_moodle_url' => $moodleurlpic,
                         'email' => $moodeluservalue->email,
                         'city' => $moodeluservalue->city,
@@ -711,7 +717,8 @@ if (isset($_REQUEST['sync_activities'])) {
                 } else {
                     if ($usertype == 'teacher') {
                         $moodleuserteacherarray[] = array('username' => $moodeluservalue->username,
-                            'fullname' => ucfirst($moodeluservalue->firstname) . " " . ucfirst($moodeluservalue->middlename) . " " . ucfirst($moodeluservalue->lastname),
+                            'fullname' => ucfirst($moodeluservalue->firstname) . " " . 
+                            ucfirst($moodeluservalue->middlename) . " " . ucfirst($moodeluservalue->lastname),
                             'user_pic_moodle_url' => $moodleurlpic,
                             'email' => $moodeluservalue->email,
                             'city' => $moodeluservalue->city,
@@ -781,10 +788,11 @@ if (isset($_REQUEST['sync_activities'])) {
         if (!empty($response)) {
             foreach ($response as $key => $teamniotaskid) {
                 if ($teamniotaskid != '0') {
-                    $alreadyexistquery = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} 
+                    $alreadyexistquery = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync}
                     where teamnio_task_id = '$teamniotaskid'");
                     if (empty($alreadyexistquery)) {
-                        $DB->execute("INSERT INTO {tool_leeloolxp_sync} (`id`, `courseid`, `sectionid`, `activityid`, `enabled`, `teamnio_task_id`,`is_quiz`) 
+                        $DB->execute("INSERT INTO {tool_leeloolxp_sync} 
+                        (`id`, `courseid`, `sectionid`, `activityid`, `enabled`, `teamnio_task_id`,`is_quiz`) 
                         VALUES (NULL, '$courseid', '$sectionid', '$activityid', '1', '$teamniotaskid','0')");
                     }
                     $msg = 'Sychronizationed successfully.';
@@ -839,13 +847,17 @@ if (!isset($_REQUEST['action'])) {
                 <table>
                     <tr>
                         <td>
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse<?php echo $catvalue->id; ?>" aria-expanded="false" aria-controls="collapse<?php echo $catvalue->id; ?>"><?php echo $catvalue->name; ?></button>
+                            <button class="btn btn-link collapsed" 
+                            data-toggle="collapse" data-target="#collapse<?php echo $catvalue->id; ?>" 
+                            aria-expanded="false" aria-controls="collapse<?php echo $catvalue->id; ?>"><?php echo $catvalue->name; ?></button>
                         </td>
                         <td>Synced?</td>
                     </tr>
                 </table>
             </div>
-            <div id="collapse<?php echo $catvalue->id; ?>" class="collapse" aria-labelledby="heading<?php echo $catvalue->id; ?>" data-parent="#accordion">
+            <div id="collapse<?php echo $catvalue->id; ?>" 
+            class="collapse" aria-labelledby="heading<?php echo $catvalue->id; ?>" 
+            data-parent="#accordion">
                 <div class="card-body">
                     <div class="card-table">
                         <table>
@@ -865,7 +877,8 @@ $courses = $DB->get_records('course', array('category' => $catvalue->id));
                                             <div class="tqs-right">
                                                 <?php
                     $alreadysync = false;
-                    $coursesyncedquery = $DB->get_records('tool_leeloolxp_sync', array('courseid' => $coursevalue->id));
+                    $coursesyncedquery = $DB->get_records('tool_leeloolxp_sync', 
+                    array('courseid' => $coursevalue->id));
                     if (!empty($coursesyncedquery)) {
                         $alreadysync = true;
                     }
@@ -875,25 +888,30 @@ $courses = $DB->get_records('course', array('category' => $catvalue->id));
                                                     <ul>
                                                         <?php if ($alreadysync) {?>
                                                             <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>?action=add&courseid=<?php echo $coursevalue->id; ?>">Edit</a></li>
-                                                            <li><a href="#" onclick="UnsyncCourse('<?php echo $coursevalue->fullname; ?>','<?php echo $coursevalue->id; ?>');">Unsync</a></li>
-                                                            <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>?resync=resync&courseid_resync=<?php echo $coursevalue->id; ?>">Resync</a></li>
+                                                            <li><a href="#" onclick="UnsyncCourse('<?php echo $coursevalue->fullname; ?>','
+                                                            <?php echo $coursevalue->id; ?>');">Unsync</a></li>
+                                                            <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
+                                                            ?resync=resync&courseid_resync=<?php echo $coursevalue->id; ?>">Resync</a></li>
                                                             <?php } else {?>
-                                                                <li><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>?action=add&courseid=<?php echo $coursevalue->id; ?>">Add</a></li>
+                                                                <li>
+                                                                <a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
+                                                                ?action=add&courseid=<?php echo $coursevalue->id; ?>">Add</a></li>
                                                                 <?php }?>
                                                     </ul>
                                                 </div>
                                             </td>
                                         </tr>
-                                    <?php }}?>
+                                    <?php }}
+?>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
             <?php
-}
+        }
     }
-    ?>
+?>
 </div>
 
 
@@ -902,8 +920,17 @@ $courses = $DB->get_records('course', array('category' => $catvalue->id));
 
 if (isset($_REQUEST['action'])) {
     ?>
-    <div class="back-arrow-left"><a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>"><i class="fa fa-arrow-left"></i> Back to courses list</a></div>
-    <table id="acivity_sync_table"><tr><th>Section</th> <th>Name</th><th>Teamnio Activity Tracker <br> <input type="checkbox" name="all_activity_checkbox" id="all_activity_checkbox" onchange="check_all_activity();"> Select all  </th> <th>Teamnio Quiz Tracker <br> <input type="checkbox" name="all_is_quiz_checkbox" id="all_is_quiz_checkbox" onchange="check_all_is_quiz();"> Select all </th></tr>
+    <div class="back-arrow-left">
+    <a href="<?php echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>">
+    <i class="fa fa-arrow-left"></i> Back to courses list</a></div>
+    <table id="acivity_sync_table"><tr><th>Section</th>
+    <th>Name</th>
+    <th>Teamnio Activity Tracker <br> 
+    <input type="checkbox" name="all_activity_checkbox" 
+    id="all_activity_checkbox" onchange="check_all_activity();"> Select all  </th> 
+    <th>Teamnio Quiz Tracker <br> 
+    <input type="checkbox" name="all_is_quiz_checkbox" 
+    id="all_is_quiz_checkbox" onchange="check_all_is_quiz();"> Select all </th></tr>
         <form method="post">
             <?php
 if ($_REQUEST['action'] == 'add') {
@@ -983,9 +1010,10 @@ if ($_REQUEST['action'] == 'add') {
                                                     }
                                                 }
                                             }
-                                            $activityids = $DB->get_record('course_modules', 
+                                            $activityids = $DB->get_record('course_modules',
                                             array('instance' => $instance, 'module' => $moduleid));
-                                            $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} 
+                                            $alreadyenabled = $DB->get_record_sql("SELECT id FROM 
+                                            {tool_leeloolxp_sync}
                                             where activityid = '$activityids->id' and enabled = '1'");
                                             $enabled = false;
 
@@ -993,7 +1021,9 @@ if ($_REQUEST['action'] == 'add') {
                                                 $enabled = true;
                                             }?>
                                                                 <tr>
-                                                                    <td><?php $oldsectionsname == '';if ($oldsectionsname != $sectionsdetails->name) {echo $sectionsdetails->name;?> - <?php echo $coursedetails->fullname;} ?></td>
+                                                                    <td><?php $oldsectionsname == '';
+                                                                    if ($oldsectionsname != $sectionsdetails->name) {echo $sectionsdetails->name;?> - <?php 
+                                                                    echo $coursedetails->fullname;} ?></td>
                                                                     <td>
                                                                         <div class="tqs-left">
                                                                             <?php
@@ -1001,7 +1031,8 @@ $cm = $modinfo->cms[$activityids->id];
 
                                             if ($cm) {
                                                 $iconurl = $cm->get_icon_url();
-                                                $icon = '<img src="' . $cm->get_icon_url() . '" class="icon" alt="" />&nbsp;';
+                                                $icon = '<img src="' . $cm->get_icon_url() . '" 
+                                                class="icon" alt="" />&nbsp;';
                                             } else {
                                                 $icon = '<i class="fa fa-recycle"></i>';
                                                 $iconurl = '';
@@ -1014,40 +1045,60 @@ $cm = $modinfo->cms[$activityids->id];
                                                                     </td>
                                                                     <td>
                                                                         <div class="tqs-right">
-                                                                            <span class="tqs-span-<?php if ($enabled) {echo "yes";} else {echo "no";}?>"><?php if ($enabled) {echo "Yes";} else {echo "No";}?> </span>
+                                                                            <span class="tqs-span-<?php if ($enabled) {
+                                                                                echo "yes";} else {echo "no";}?>">
+                                                                                <?php if ($enabled) {echo "Yes";} else {echo "No";}?> </span>
                                                                             <ul>
                                                                                 <?php $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                                             if ($enabled) {
                                                 ?>
-                                                                                        <li><a  href="<?php echo $url; ?>?resync_activity=1&activity_id=<?php echo $activityids->id; ?>&activity_name=<?php echo $valuefinal->name ?>&course_id=<?php echo $_REQUEST['courseid']; ?>">Resync</a></li>
+                                                                                        <li><a  href="
+                                                                                        <?php echo $url; ?>?resync_activity=1&activity_id=<?php echo $activityids->id; ?>
+                                                                                        &activity_name=
+                                                                                        <?php echo $valuefinal->name ?>&course_id=
+                                                                                        <?php echo $_REQUEST['courseid']; ?>">Resync</a></li>
 
                                                                                      <?php
 }
                                             if ($enabled) {?>
                                                                                         <li><a onclick="UnsyncActivity('<?php echo $activityids->id; ?>')" href="#">Unsync</a></li><?php } else {
-                                                $querystring = $coursedetails->fullname . "$$" . $sectionsdetails->name . "$$" . $valuefinal->name . "$$" . $activityids->id . "$$" . $courseid . "$$" . $sectionsdetails->summary . "$$" . strip_tags($valuefinal->intro . "$$" . $activitystartdates . "$$" . $activityenddates . "$$" . $tbl . "$$" . $iconurl);?>
+                                                $querystring = $coursedetails->fullname . "$$" . 
+                                                $sectionsdetails->name . "$$" . $valuefinal->name . "$$" . 
+                                                $activityids->id . "$$" . $courseid . "$$" . 
+                                                $sectionsdetails->summary . "$$" . 
+                                                strip_tags($valuefinal->intro . "$$" . 
+                                                $activitystartdates . "$$" . 
+                                                $activityenddates . "$$" . $tbl . "$$" . $iconurl);?>
                                                                                             <li><input class="all_activity_checkbox_single" type="checkbox" name="all_activities[]" value="<?php echo str_replace('"', '', $querystring); ?>"></li>
                                                                                             <?php }?>
                                                                                         </ul>
                                                                                     </div>
                                                                                     </td>
                                                                                     <?php if (isset($valuefinal->questionsperpage)) {
-                                                $isquiz = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync} where activityid = '$activityids->id' and `is_quiz` = '1'");
+                                                $isquiz = $DB->get_record_sql("SELECT id FROM 
+                                                {tool_leeloolxp_sync} 
+                                                where activityid = '$activityids->id' and `is_quiz` = '1'");
 
                                                 if (!empty($isquiz)) {
                                                     $checked = true;
                                                 } else {
-
-                                                    $checked = false;
-                                                }
+                                                        $checked = false;
+                                                        }
                                                 ?>
-                                                                                        <td style="text-align: center"> <input type="checkbox" <?php if ($checked) {echo "checked='checked'";}?> name="quiz_sync[]" class="quiz_sync_check" value="<?php echo $activityids->id; ?>"></td> <?php } else {?> <td></td> <?php }?>
+                                                                                        <td style="text-align: center"> <input type="checkbox" 
+                                                                                        <?php if ($checked) {
+                                                                                            echo "checked='checked'";
+                                                                                            }?> 
+                                                                                            name="quiz_sync[]" class="quiz_sync_check" 
+                                                                                            value="<?php echo $activityids->id; ?>"></td> <?php } else {?> <td></td> <?php }?>
                                                                                     </tr>
 
 
 
                                                                             <?php
-}
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1055,8 +1106,7 @@ $cm = $modinfo->cms[$activityids->id];
                     }
                 }
             }
-        }
-    }?>
+?>
 
     <tr>
         <td></td>
@@ -1187,7 +1237,8 @@ echo $OUTPUT->footer(); ?>
             <p>If you do, all users tracking data in the Activity/Resourse will be lost!</p>
             <h3>You can’t undo this.</h3>
             <div class="sure-btn">
-                <button data_id = "" onclick="btn_yes_activityunsync();" class="btn btn_yes_activityunsync" >Yes, I’m sure</button>
+                <button data_id = "" onclick="btn_yes_activityunsync();" 
+                class="btn btn_yes_activityunsync" >Yes, I’m sure</button>
                 <button  onclick="activity_cls_popup();" class="btn activity_cls_popup" >Close</button>
             </div>
             <div class="anymore-link">
@@ -1204,7 +1255,8 @@ echo $OUTPUT->footer(); ?>
             <p>If you do, all users tracking data in the course will be lost!</p>
             <h3>You can’t undo this.</h3>
             <div class="sure-btn">
-                <button data_id = "" data_name="" onclick="btn_yes_courseunsync();" class="btn btn_yes_courseunsync" >Yes, I’m sure</button>
+                <button data_id = "" data_name="" onclick="btn_yes_courseunsync();" 
+                class="btn btn_yes_courseunsync" >Yes, I’m sure</button>
                 <button  onclick="course_cls_popup();" class="btn course_cls_popup" >Close</button>
             </div>
             <div class="anymore-link">
