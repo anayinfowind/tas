@@ -17,7 +17,7 @@
 /**
  * Messaging for Wespher Departments.
  *
- * @package    leeloolxp_sync
+ * @package    tool_leeloolxp_sync
  * @copyright  2020 leeloolxp.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
