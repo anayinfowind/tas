@@ -1074,10 +1074,10 @@ if ($_REQUEST['action'] == 'add') {
                                                                                     echo "Yes";
                                                                                 } else {
                                                                                     echo "No";
-                                                                                    }?> </span>
+                                                                                }?> </span>
                                                                             <ul>
-                                                                            <?php $url = parse_url($_SERVER['REQUEST_URI',
-                                                                                PHP_URL_PATH);
+                                                                            <?php $url = parse_url(
+                                                                                $_SERVER['REQUEST_URI', PHP_URL_PATH);
                                                                                 if ($enabled) {
                                                 ?>
                                                                                         <li><a  href="
