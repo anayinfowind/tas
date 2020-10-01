@@ -17,7 +17,7 @@
 /**
  * Admin settings and defaults
  *
- * @package tool_leeloolxp_sync
+ * @package leeloolxp_sync
  * @copyright  2020 Leeloo LXP (https://leeloolxp.com)
  * @author Leeloo LXP <info@leeloolxp.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -255,8 +255,8 @@ if (isset($_REQUEST['resync_activity'])) {
     $coursename = $coursedetails->fullname;
     $table = 'course_sections'; // Section table name.
     $sections = $DB->get_records($table, array('course' => $courseid)); // Fetch sections of each course.
-    $course = get_course($courseid);
-    $modinfo = get_fast_modinfo($course);
+    $courseresyncactivity = get_course($courseid);
+    $modinfo = get_fast_modinfo($courseresyncactivity);
     $arrmain = array();
     if (!empty($sections)) {
         foreach ($sections as $sectionkey => $sectionsdetails) {
@@ -367,21 +367,21 @@ if (isset($_REQUEST['resync_activity'])) {
             'CURLOPT_HEADER' => false,
             'CURLOPT_POST' => count($post),
         );
-    if (!$$response = $curl->post($url, $post, $options)) {
+    if (!$response = $curl->post($url, $post, $options)) {
         return true;
     }
     $msg = 'Resychronizationed successfully.';
 }
 
 if (isset($_REQUEST['resync'])) {
-    $courseid = $_REQUEST['courseid_resync'];
-    $coursedetails = $DB->get_record('course', array('id' => $courseid)); // Fetch all exist course from.
+    $courseidresync = $_REQUEST['courseid_resync'];
+    $coursedetails = $DB->get_record('course', array('id' => $courseidresync)); // Fetch all exist course from.
     $projectdescription = $coursedetails->summary;
     $idnumber = $coursedetails->idnumber;
     $coursename = $coursedetails->fullname;
     $table = 'course_sections'; // Section table name.
-    $sections = $DB->get_records_sql("SELECT * FROM {course_sections} where course = '$courseid' and name != ''");
-    $course = get_course($courseid);
+    $sections = $DB->get_records_sql("SELECT * FROM {course_sections} where course = '$courseidresync' and name != ''");
+    $course = get_course($courseidresync);
     $modinfo = get_fast_modinfo($course);
     $arrmain = array();
     if (!empty($sections)) {
@@ -476,7 +476,7 @@ if (isset($_REQUEST['resync'])) {
         }
     }
     $post = [
-        'course_id' => $courseid,
+        'course_id' => $courseidresync,
         'course_name' => $coursename,
         'activity_array' => json_encode($arrmain),
         'start_date' => $coursedetails->startdate,
@@ -986,8 +986,8 @@ if (isset($_REQUEST['action'])) {
                 $coursedetails = $DB->get_record('course', array('id' => $courseid));
                 $table = 'course_sections';
                 $sections = $DB->get_records($table, array('course' => $courseid));
-                $course = get_course($courseid);
-                $modinfo = get_fast_modinfo($course);
+                $courseaction = get_course($courseid);
+                $modinfo = get_fast_modinfo($courseaction);
                 if (!empty($sections)) {
                     foreach ($sections as $sectionkey => $sectionsdetails) {
                         if ($sectionsdetails->name != '') {
