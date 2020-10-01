@@ -949,8 +949,8 @@ if (!empty($categories)) {
                                             </td>
                                         </tr>
                                     <?php
+                            }
                         }
-                    }
 ?>
                                 </table>
                             </div>
@@ -981,75 +981,76 @@ if (isset($_REQUEST['action'])) {
     id="all_is_quiz_checkbox" onchange="check_all_is_quiz();"> Select all </th></tr>
         <form method="post">
             <?php
-                if ($_REQUEST['action'] == 'add') {
+            if ($_REQUEST['action'] == 'add') {
                 $courseid = $_REQUEST['courseid'];
-
                 $coursedetails = $DB->get_record('course', array('id' => $courseid));
                 $table = 'course_sections';
                 $sections = $DB->get_records($table, array('course' => $courseid));
                 $course = get_course($courseid);
                 $modinfo = get_fast_modinfo($course);
 
-        if (!empty($sections)) {
-            foreach ($sections as $sectionkey => $sectionsdetails) {
-                if ($sectionsdetails->name != '') {
-                    $modulescourse = $DB->get_records_sql("select * from
-                    {course_modules} where section = '" . $sectionsdetails->id . "' order by added DESC");
-                    if (!empty($modulescourse)) {
-                        foreach ($modulescourse as $coursemoduledetails) {
-                            $moduleid = $coursemoduledetails->module;
-                            $instance = $coursemoduledetails->instance;
-                            $modules = $DB->get_records("modules", array('id' => $moduleid));
-                            if (!empty($modules)) {
-                                foreach ($modules as $key => $value) {
-                                    $tbl = $value->name;
-                                    $moduledetail = $DB->get_records($tbl, array('id' => $instance));
-                                    if (!empty($moduledetail)) {
-                                        foreach ($moduledetail as $key => $valuefinal) {
-                                            if ($tbl == 'lesson') {
-                                                $activitystartdates = $valuefinal->available;
-                                                $activityenddates = $valuefinal->deadline;
-                                            } else {
-                                                if ($tbl == 'quiz') {
-                                                    $activitystartdates = $valuefinal->timeopen;
-                                                    $activityenddates = $valuefinal->timeclose;
-                                                } else {
-                                                    if ($tbl == 'assign') {
-                                                        $activitystartdates = $valuefinal->allowsubmissionsfromdate;
-                                                        $activityenddates = $valuefinal->duedate;
+                if (!empty($sections)) {
+                    foreach ($sections as $sectionkey => $sectionsdetails) {
+                        if ($sectionsdetails->name != '') {
+                            $modulescourse = $DB->get_records_sql("select * from
+                            {course_modules} where section = '" . $sectionsdetails->id . "' order by added DESC");
+                            if (!empty($modulescourse)) {
+                                foreach ($modulescourse as $coursemoduledetails) {
+                                    $moduleid = $coursemoduledetails->module;
+                                    $instance = $coursemoduledetails->instance;
+                                    $modules = $DB->get_records("modules", array('id' => $moduleid));
+                                    if (!empty($modules)) {
+                                        foreach ($modules as $key => $value) {
+                                            $tbl = $value->name;
+                                            $moduledetail = $DB->get_records($tbl, array('id' => $instance));
+                                            if (!empty($moduledetail)) {
+                                                foreach ($moduledetail as $key => $valuefinal) {
+                                                    if ($tbl == 'lesson') {
+                                                        $activitystartdates = $valuefinal->available;
+                                                        $activityenddates = $valuefinal->deadline;
                                                     } else {
-                                                        if ($tbl == 'chat') {
-                                                            $activitystartdates = $valuefinal->chattime;
-                                                            $activityenddates = $valuefinal->chattime;
+                                                        if ($tbl == 'quiz') {
+                                                            $activitystartdates = $valuefinal->timeopen;
+                                                            $activityenddates = $valuefinal->timeclose;
                                                         } else {
-                                                            if ($tbl == 'choice') {
-                                                                $activitystartdates = $valuefinal->timeopen;
-                                                                $activityenddates = $valuefinal->timeclose;
+                                                            if ($tbl == 'assign') {
+                                                                $activitystartdates = $valuefinal->allowsubmissionsfromdate;
+                                                                $activityenddates = $valuefinal->duedate;
                                                             } else {
-                                                                if ($tbl == 'data') {
-                                                                    $activitystartdates = $valuefinal->timeavailablefrom;
-                                                                    $activityenddates = $valuefinal->timeavailableto;
+                                                                if ($tbl == 'chat') {
+                                                                    $activitystartdates = $valuefinal->chattime;
+                                                                    $activityenddates = $valuefinal->chattime;
                                                                 } else {
-                                                                    if ($tbl == 'feedback') {
+                                                                    if ($tbl == 'choice') {
                                                                         $activitystartdates = $valuefinal->timeopen;
                                                                         $activityenddates = $valuefinal->timeclose;
                                                                     } else {
-                                                                        if ($tbl == 'forum') {
-                                                                            $activitystartdates = $valuefinal->duedate;
-                                                                            $activityenddates = $valuefinal->cutoffdate;
+                                                                        if ($tbl == 'data') {
+                                                                            $activitystartdates = $valuefinal->timeavailablefrom;
+                                                                            $activityenddates = $valuefinal->timeavailableto;
                                                                         } else {
-                                                                            if ($tbl == 'wespher') {
+                                                                            if ($tbl == 'feedback') {
                                                                                 $activitystartdates = $valuefinal->timeopen;
-                                                                                $activityenddates = $valuefinal->timeopen;
+                                                                                $activityenddates = $valuefinal->timeclose;
                                                                             } else {
-                                                                                if ($tbl ==
-                                                                                'workshop') {
-                                                                                    $activitystartdates
-                                                                                    = $valuefinal->submissionstart;
-                                                                                    $activityenddates = $valuefinal->submissionend;
+                                                                                if ($tbl == 'forum') {
+                                                                                    $activitystartdates = $valuefinal->duedate;
+                                                                                    $activityenddates = $valuefinal->cutoffdate;
                                                                                 } else {
-                                                                                    $activitystartdates = $coursedetails->startdate;
-                                                                                    $activityenddates = $coursedetails->enddate;
+                                                                                    if ($tbl == 'wespher') {
+                                                                                        $activitystartdates = $valuefinal->timeopen;
+                                                                                        $activityenddates = $valuefinal->timeopen;
+                                                                                    } else {
+                                                                                        if ($tbl ==
+                                                                                        'workshop') {
+                                                                                            $activitystartdates
+                                                                                            = $valuefinal->submissionstart;
+                                                                                            $activityenddates = $valuefinal->submissionend;
+                                                                                        } else {
+                                                                                            $activitystartdates = $coursedetails->startdate;
+                                                                                            $activityenddates = $coursedetails->enddate;
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -1058,90 +1059,90 @@ if (isset($_REQUEST['action'])) {
                                                             }
                                                         }
                                                     }
-                                                }
-                                            }
-                                            $activityids = $DB->get_record('course_modules',
-                                            array('instance' => $instance, 'module' => $moduleid));
-                                            $alreadyenabled = $DB->get_record_sql("SELECT id FROM
-                                            {tool_leeloolxp_sync}
-                                            where activityid = '$activityids->id' and enabled = '1'");
-                                            $enabled = false;
+                                                    $activityids = $DB->get_record('course_modules',
+                                                    array('instance' => $instance, 'module' => $moduleid));
+                                                    $alreadyenabled = $DB->get_record_sql("SELECT id FROM
+                                                    {tool_leeloolxp_sync}
+                                                    where activityid = '$activityids->id' and enabled = '1'");
+                                                    $enabled = false;
 
-                                            if (!empty($alreadyenabled)) {
-                                                $enabled = true;
-                                            }
-                                            echo '<tr><td>'.$oldsectionsname == '';
-                                            if ($oldsectionsname != $sectionsdetails->name) {
-                                                echo $sectionsdetails->name. "-";
-                                                echo $coursedetails->fullname;
-                                            }
-                                            echo '</td><td><div class="tqs-left">';
-                                            $cm = $modinfo->cms[$activityids->id];
-                                            if ($cm) {
-                                                $iconurl = $cm->get_icon_url();
-                                                $icon = '<img src="' . $cm->get_icon_url() . '"
-                                                class="icon" alt="" />&nbsp;';
-                                            } else {
-                                                $icon = '<i class="fa fa-recycle"></i>';
-                                                $iconurl = '';
-                                            }
-                                            echo $icon;
-                                            echo '<span>'.$oldsectionsname = $sectionsdetails->name;
-                                            echo $valuefinal->name;
-                                            echo '</span></div></td><td><div class="tqs-right">
-                                            <span class="tqs-span-';
-                                            if ($enabled) { 
-                                                echo "yes";
-                                            } else {
-                                                echo "no";
-                                            }
-                                            echo '">';
-                                            if ($enabled) {
-                                                echo "Yes";
-                                            } else {
-                                                echo "No";
-                                            }
-                                            echo '</span><ul>';
-                                            $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                                            if ($enabled) {
-                                                echo '<li><a  href="'.$url.'?resync_activity=1&activity_id=
-                                                '.$activityids->id.'&activity_name='.$valuefinal->name.'&course_id='.$_REQUEST
-                                                ['courseid'].'">Resync</a></li>';
-                                            }
-                                            if ($enabled) {
-                                                echo '<li><a onclick="UnsyncActivity('.$activityids->id.')"
-                                                href="#">Unsync</a></li>';
-                                            } else {
-                                                $querystring = $coursedetails->fullname . "$$" .
-                                                $sectionsdetails->name . "$$" . $valuefinal->name . "$$" .
-                                                $activityids->id . "$$" . $courseid . "$$" .
-                                                $sectionsdetails->summary . "$$" .
-                                                strip_tags($valuefinal->intro . "$$" .
-                                                $activitystartdates . "$$" .
-                                                $activityenddates . "$$" . $tbl . "$$" . $iconurl);
-                                                echo '<li><input class="all_activity_checkbox_single"
-                                                type="checkbox" name="all_activities[]" value="'.str_replace('"', '',
-                                                $querystring).'"></li>';
-                                            }
-                                            echo '</ul>';
-                                            echo '</div></td>';
-                                            if (isset($valuefinal->questionsperpage)) {
-                                                $isquiz = $DB->get_record_sql("SELECT id FROM
-                                                {tool_leeloolxp_sync} where activityid = '$activityids->id'
-                                                and `is_quiz` = '1'");
-                                                if (!empty($isquiz)) {
-                                                    $checked = true;
-                                                } else {
-                                                    $checked = false;
+                                                    if (!empty($alreadyenabled)) {
+                                                        $enabled = true;
+                                                    }
+                                                    echo '<tr><td>'.$oldsectionsname == '';
+                                                    if ($oldsectionsname != $sectionsdetails->name) {
+                                                        echo $sectionsdetails->name. "-";
+                                                        echo $coursedetails->fullname;
+                                                    }
+                                                    echo '</td><td><div class="tqs-left">';
+                                                    $cm = $modinfo->cms[$activityids->id];
+                                                    if ($cm) {
+                                                        $iconurl = $cm->get_icon_url();
+                                                        $icon = '<img src="' . $cm->get_icon_url() . '"
+                                                        class="icon" alt="" />&nbsp;';
+                                                    } else {
+                                                        $icon = '<i class="fa fa-recycle"></i>';
+                                                        $iconurl = '';
+                                                    }
+                                                    echo $icon;
+                                                    echo '<span>'.$oldsectionsname = $sectionsdetails->name;
+                                                    echo $valuefinal->name;
+                                                    echo '</span></div></td><td><div class="tqs-right">
+                                                    <span class="tqs-span-';
+                                                    if ($enabled) { 
+                                                        echo "yes";
+                                                    } else {
+                                                        echo "no";
+                                                    }
+                                                    echo '">';
+                                                    if ($enabled) {
+                                                        echo "Yes";
+                                                    } else {
+                                                        echo "No";
+                                                    }
+                                                    echo '</span><ul>';
+                                                    $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                                                    if ($enabled) {
+                                                        echo '<li><a  href="'.$url.'?resync_activity=1&activity_id=
+                                                        '.$activityids->id.'&activity_name='.$valuefinal->name.'&course_id='.$_REQUEST
+                                                        ['courseid'].'">Resync</a></li>';
+                                                    }
+                                                    if ($enabled) {
+                                                        echo '<li><a onclick="UnsyncActivity('.$activityids->id.')"
+                                                        href="#">Unsync</a></li>';
+                                                    } else {
+                                                        $querystring = $coursedetails->fullname . "$$" .
+                                                        $sectionsdetails->name . "$$" . $valuefinal->name . "$$" .
+                                                        $activityids->id . "$$" . $courseid . "$$" .
+                                                        $sectionsdetails->summary . "$$" .
+                                                        strip_tags($valuefinal->intro . "$$" .
+                                                        $activitystartdates . "$$" .
+                                                        $activityenddates . "$$" . $tbl . "$$" . $iconurl);
+                                                        echo '<li><input class="all_activity_checkbox_single"
+                                                        type="checkbox" name="all_activities[]" value="'.str_replace('"', '',
+                                                        $querystring).'"></li>';
+                                                    }
+                                                    echo '</ul>';
+                                                    echo '</div></td>';
+                                                    if (isset($valuefinal->questionsperpage)) {
+                                                        $isquiz = $DB->get_record_sql("SELECT id FROM
+                                                        {tool_leeloolxp_sync} where activityid = '$activityids->id'
+                                                        and `is_quiz` = '1'");
+                                                        if (!empty($isquiz)) {
+                                                            $checked = true;
+                                                        } else {
+                                                            $checked = false;
+                                                        }
+                                                        echo '<td style="text-align: center"><input type="checkbox"';
+                                                        if ($checked) {
+                                                            echo "checked='checked'";
+                                                        }
+                                                        echo 'name="quiz_sync[]" class="quiz_sync_check"
+                                                        value="'.$activityids->id.'"></td>';
+                                                    } else {
+                                                        echo '<td></td>';
+                                                    }
                                                 }
-                                                echo '<td style="text-align: center"><input type="checkbox"';
-                                                if ($checked) {
-                                                    echo "checked='checked'";
-                                                }
-                                                echo 'name="quiz_sync[]" class="quiz_sync_check"
-                                                value="'.$activityids->id.'"></td>';
-                                            } else {
-                                                echo '<td></td>';
                                             }
                                         }
                                     }
@@ -1151,8 +1152,6 @@ if (isset($_REQUEST['action'])) {
                     }
                 }
             }
-        }
-    }
 ?>
 
     <tr>
