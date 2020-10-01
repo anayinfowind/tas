@@ -233,21 +233,21 @@ $configtoolleeloolxpsync = get_config('tool_leeloolxp_sync');
 $curl = new curl;
 $postdata = array('license_key' => $liacnsekey);
 $url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
-    $options = array(
-            'CURLOPT_RETURNTRANSFER' => true,
-            'CURLOPT_HEADER' => false,
-            'CURLOPT_POST' => count($postdata),
-        );
-    if (!$output = $curl->post($url, $postdata, $options)) {
-        return true;
-    }
-    $infoleeloolxp = json_decode($output);
-    if ($infoleeloolxp->status != 'false') {
-        $teamniourl = $infoleeloolxp->data->install_url;
-    } else {
-        return true;
-    }
-    if (isset($_REQUEST['resync_activity'])) {
+$options = array(
+        'CURLOPT_RETURNTRANSFER' => true,
+        'CURLOPT_HEADER' => false,
+        'CURLOPT_POST' => count($postdata),
+    );
+if (!$output = $curl->post($url, $postdata, $options)) {
+    return true;
+}
+$infoleeloolxp = json_decode($output);
+if ($infoleeloolxp->status != 'false') {
+    $teamniourl = $infoleeloolxp->data->install_url;
+} else {
+    return true;
+}
+if (isset($_REQUEST['resync_activity'])) {
     $activityid = $_REQUEST['activity_id'];
     $activityname = $_REQUEST['activity_name'];
     $courseid = $_REQUEST['course_id'];
@@ -1151,9 +1151,11 @@ if ($_REQUEST['action'] == 'add') {
                                                                                     </td>
                                                                                     <?php if (isset
                                                                                     ($valuefinal->questionsperpage)) {
-                                                                                        $isquiz = $DB->get_record_sql("SELECT id FROM
+                                                                                        $isquiz = $DB->get_record_sql("SELECT
+                                                                                        id FROM
                                                                                         {tool_leeloolxp_sync}
-                                                                                        where activityid = '$activityids->id' and `is_quiz` = '1'");
+                                                                                        where activityid = '$activityids->id'
+                                                                                        and `is_quiz` = '1'");
 
                                                                                         if (!empty($isquiz)) {
                                                                                             $checked = true;
