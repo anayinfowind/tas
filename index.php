@@ -259,10 +259,10 @@ if (isset($_REQUEST['resync_activity'])) {
     $sectionsone = $sections;
     $modinfo = get_fast_modinfo($courseresyncactivity);
     if (!empty($sectionsone)) {
-        foreach ($sectionsone as $sectionkey => $sectionsdetails) {
-            if ($sectionsdetails->name != '') {
+        foreach ($sectionsone as $sectionkey1 => $sectionsdetailss) {
+            if ($sectionsdetailss->name != '') {
                 $modulescourse = $DB->get_records("course_modules",
-                array('section' => $sectionsdetails->id)); // Fecth modules and instaced of modules.
+                array('section' => $sectionsdetailss->id)); // Fecth modules and instaced of modules.
                 if (!empty($modulescourse)) {
                     foreach ($modulescourse as $coursemoduledetails) {
                         $moduleid = $coursemoduledetails->module;
@@ -277,9 +277,9 @@ if (isset($_REQUEST['resync_activity'])) {
                                     foreach ($moduledetail as $key => $valuefinal) {
                                         $activityids = $DB->get_record('course_modules',
                                         array('instance' => $instance, 'module' => $moduleid));
-                                        $sectionsdetails->name;
+                                        $sectionsdetailss->name;
                                         $cm = $modinfo->cms[$activityids->id];
-                                        $oldsectionsname = $sectionsdetails->name;
+                                        $oldsectionsname = $sectionsdetailss->name;
                                         if ($tbl == 'lesson') {
                                             $activitystartdates = $valuefinal->available;
                                             $activityenddates = $valuefinal->deadline;
