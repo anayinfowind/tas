@@ -939,7 +939,7 @@ if (!empty($categories)) {
                                                                 ?resync=resync&courseid_resync='.$coursevalue->id.'">
                                                                 Resync</a></li>';
                                                         } else {
-                                                            echo  echo '<li><a href="'.parse_url(
+                                                            echo '<li><a href="'.parse_url(
                                                                 $_SERVER['REQUEST_URI'], PHP_URL_PATH
                                                                 ).'?action=add&courseid=.'$coursevalue->id.'">Add</a></li>';
                                                         }
@@ -988,7 +988,6 @@ if (isset($_REQUEST['action'])) {
                 $sections = $DB->get_records($table, array('course' => $courseid));
                 $course = get_course($courseid);
                 $modinfo = get_fast_modinfo($course);
-
                 if (!empty($sections)) {
                     foreach ($sections as $sectionkey => $sectionsdetails) {
                         if ($sectionsdetails->name != '') {
