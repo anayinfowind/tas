@@ -797,8 +797,7 @@ if (isset($_REQUEST['sync_activities'])) {
             'enddate' => $coursedetailsagain->enddate,
             'activity_type' => $activitytype,
             'activity_url' => $activityurl,
-        ];
-        
+        ];        
         $url = $teamniourl . '/admin/sync_moodle_course/index';
         $curl = new curl;
         $options = array(
@@ -942,14 +941,14 @@ if (!empty($categories)) {
                                                                 echo $coursevalue->id; ?>">
                                                                 Resync</a></li>
                                                             <?php
-                                                        } else {?>
+                                                        } else { ?>
                                                                 <li>
                                                                     <a href="<?php
                                                                     echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
                                                                 ?action=add&courseid=
                                                                 <?php echo $coursevalue->id; ?>">Add</a></li>
                                                                 <?php
-                                                            }?>
+                                                            } ?>
                                                     </ul>
                                                 </div>
                                             </td>
