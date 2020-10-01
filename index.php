@@ -277,9 +277,7 @@ if (isset($_REQUEST['resync_activity'])) {
                                     foreach ($moduledetail as $key => $valuefinal) {
                                         $activityids = $DB->get_record('course_modules',
                                         array('instance' => $instance, 'module' => $moduleid));
-                                        $sectionsdetailss->name;
                                         $cm = $modinfo->cms[$activityids->id];
-                                        $oldsectionsname = $sectionsdetailss->name;
                                         if ($tbl == 'lesson') {
                                             $activitystartdates = $valuefinal->available;
                                             $activityenddates = $valuefinal->deadline;
@@ -399,7 +397,6 @@ if (isset($_REQUEST['resync'])) {
                                         $sectionsdetails->name;
                                         $cm = $modinfo->cms[$activityids->id];
                                         $oldsectionsname = $sectionsdetails->name;
-
                                         if ($tbl == 'lesson') {
                                             $activitystartdates = $valuefinal->available;
                                             $activityenddates = $valuefinal->deadline;
@@ -692,7 +689,7 @@ if (isset($_REQUEST['sync_activities'])) {
                     $moodleuserstudentarray[] = array(
                         'username' => $moodeluservalue->username,
                         'fullname' => ucfirst($moodeluservalue->firstname) . " " .
-                        ucfirst($moodeluservalue->middlename) . " " . ucfirst($moodeluservalue->lastname),
+                        ucfirst($moodeluservalue->middlename). " " .ucfirst($moodeluservalue->lastname),
                         'user_pic_moodle_url' => $moodleurlpic,
                         'email' => $moodeluservalue->email,
                         'city' => $moodeluservalue->city,
@@ -996,50 +993,50 @@ if (isset($_REQUEST['action'])) {
                                                 foreach ($moduledetail as $key => $valuefinal) {
                                                     if ($tbl == 'lesson') {
                                                         $activitystartdates = $valuefinal->available;
-                                                        $activityenddates = $valuefinal->deadline;
+                                                        $activityenddatess = $valuefinal->deadline;
                                                     } else {
                                                         if ($tbl == 'quiz') {
                                                             $activitystartdates = $valuefinal->timeopen;
-                                                            $activityenddates = $valuefinal->timeclose;
+                                                            $activityenddatess = $valuefinal->timeclose;
                                                         } else {
                                                             if ($tbl == 'assign') {
                                                                 $activitystartdates = $valuefinal->allowsubmissionsfromdate;
-                                                                $activityenddates = $valuefinal->duedate;
+                                                                $activityenddatess = $valuefinal->duedate;
                                                             } else {
                                                                 if ($tbl == 'chat') {
                                                                     $activitystartdates = $valuefinal->chattime;
-                                                                    $activityenddates = $valuefinal->chattime;
+                                                                    $activityenddatess = $valuefinal->chattime;
                                                                 } else {
                                                                     if ($tbl == 'choice') {
                                                                         $activitystartdates = $valuefinal->timeopen;
-                                                                        $activityenddates = $valuefinal->timeclose;
+                                                                        $activityenddatess = $valuefinal->timeclose;
                                                                     } else {
                                                                         if ($tbl == 'data') {
                                                                             $activitystartdates = $valuefinal->timeavailablefrom;
-                                                                            $activityenddates = $valuefinal->timeavailableto;
+                                                                            $activityenddatess = $valuefinal->timeavailableto;
                                                                         } else {
                                                                             if ($tbl == 'feedback') {
                                                                                 $activitystartdates = $valuefinal->timeopen;
-                                                                                $activityenddates = $valuefinal->timeclose;
+                                                                                $activityenddatess = $valuefinal->timeclose;
                                                                             } else {
                                                                                 if ($tbl == 'forum') {
                                                                                     $activitystartdates = $valuefinal->duedate;
-                                                                                    $activityenddates = $valuefinal->cutoffdate;
+                                                                                    $activityenddatess = $valuefinal->cutoffdate;
                                                                                 } else {
                                                                                     if ($tbl == 'wespher') {
                                                                                         $activitystartdates = $valuefinal->timeopen;
-                                                                                        $activityenddates = $valuefinal->timeopen;
+                                                                                        $activityenddatess = $valuefinal->timeopen;
                                                                                     } else {
                                                                                         if ($tbl ==
                                                                                         'workshop') {
                                                                                             $activitystartdates
                                                                                             = $valuefinal->submissionstart;
-                                                                                            $activityenddates =
+                                                                                            $activityenddatess =
                                                                                             $valuefinal->submissionend;
                                                                                         } else {
                                                                                             $activitystartdates =
                                                                                             $coursedetails->startdate;
-                                                                                            $activityenddates =
+                                                                                            $activityenddatess =
                                                                                             $coursedetails->enddate;
                                                                                         }
                                                                                     }
@@ -1110,7 +1107,7 @@ if (isset($_REQUEST['action'])) {
                                                         $sectionsdetails->summary . "$$" .
                                                         strip_tags($valuefinal->intro . "$$" .
                                                         $activitystartdates . "$$" .
-                                                        $activityenddates . "$$" . $tbl . "$$" . $iconurl);
+                                                        $activityenddatess . "$$" . $tbl . "$$" . $iconurl);
                                                         echo '<li><input class="all_activity_checkbox_single"
                                                         type="checkbox" name="all_activities[]"
                                                         value="'.str_replace('"', '',
