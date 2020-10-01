@@ -1077,9 +1077,8 @@ if ($_REQUEST['action'] == 'add') {
                                                                                 }?> </span>
                                                                             <ul>
                                                                             <?php $url = parse_url(
-                                                                                $_SERVER['REQUEST_URI', PHP_URL_PATH);
-                                                                                if ($enabled) {
-                                                ?>
+                                                                                $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                                                                                if ($enabled) {?>
                                                                                         <li><a  href="
                                                                                         <?php echo $url; ?>?resync_activity=1&
                                                                                         activity_id=<?php
