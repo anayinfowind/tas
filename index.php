@@ -270,7 +270,7 @@ if (isset($_REQUEST['resync_activity'])) {
                         $modules = $DB->get_records("modules", array('id' => $moduleid)); // Fetch modules for real table name.
                         if (!empty($modules)) {
                             foreach ($modules as $key => $value) {
-                                $tbl = $value->name;
+                                $tbll = $value->name;
                                 $moduledetail = $DB->get_records($tbl,
                                 array('id' => $instance));// Fetch activities and resources.
                                 if (!empty($moduledetail)) {
@@ -278,31 +278,31 @@ if (isset($_REQUEST['resync_activity'])) {
                                         $activityids = $DB->get_record('course_modules',
                                         array('instance' => $instance, 'module' => $moduleid));
                                         $cm = $modinfo->cms[$activityids->id];
-                                        if ($tbl == 'lesson') {
+                                        if ($$tbll == 'lesson') {
                                             $activitystartdates = $valuefinal->available;
                                             $activityenddates = $valuefinal->deadline;
                                         } else {
-                                            if ($tbl == 'quiz') {
+                                            if ($$tbll == 'quiz') {
                                                 $activitystartdates = $valuefinal->timeopen;
                                                 $activityenddates = $valuefinal->timeclose;
                                             } else {
-                                                if ($tbl == 'assign') {
+                                                if ($$tbll == 'assign') {
                                                     $activitystartdates = $valuefinal->allowsubmissionsfromdate;
                                                     $activityenddates = $valuefinal->duedate;
                                                 } else {
-                                                    if ($tbl == 'chat') {
+                                                    if ($$tbll == 'chat') {
                                                         $activitystartdates = $valuefinal->chattime;
                                                         $activityenddates = $valuefinal->chattime;
                                                     } else {
-                                                        if ($tbl == 'choice') {
+                                                        if ($$tbll == 'choice') {
                                                             $activitystartdates = $valuefinal->timeopen;
                                                             $activityenddates = $valuefinal->timeclose;
                                                         } else {
-                                                            if ($tbl == 'data') {
+                                                            if ($$tbll == 'data') {
                                                                 $activitystartdates = $valuefinal->timeavailablefrom;
                                                                 $activityenddates = $valuefinal->timeavailableto;
                                                             } else {
-                                                                if ($tbl == 'feedback') {
+                                                                if ($$tbll == 'feedback') {
                                                                     $activitystartdates = $valuefinal->timeopen;
                                                                     $activityenddates = $valuefinal->timeclose;
                                                                 } else {
@@ -310,11 +310,11 @@ if (isset($_REQUEST['resync_activity'])) {
                                                                         $activitystartdates = $valuefinal->duedate;
                                                                         $activityenddates = $valuefinal->cutoffdate;
                                                                     } else {
-                                                                        if ($tbl == 'wespher') {
+                                                                        if ($$tbll == 'wespher') {
                                                                             $activitystartdates = $valuefinal->timeopen;
                                                                             $activityenddates = $valuefinal->timeopen;
                                                                         } else {
-                                                                            if ($tbl == 'workshop') {
+                                                                            if ($$tbll == 'workshop') {
                                                                                 $activitystartdates = $valuefinal->submissionstart;
                                                                                 $activityenddates = $valuefinal->submissionend;
                                                                             } else {
@@ -725,8 +725,8 @@ if (isset($_REQUEST['sync_activities'])) {
                 } else {
                     if ($usertype == 'teacher') {
                         $moodleuserteacherarray[] = array('username' => $moodeluservalue->username,
-                            'fullname' => ucfirst($moodeluservalue->firstname) . " " .
-                            ucfirst($moodeluservalue->middlename) . " " . ucfirst($moodeluservalue->lastname),
+                            'fullname' => ucfirst($moodeluservalue->firstname). " " .
+                            ucfirst($moodeluservalue->middlename) . " ".ucfirst($moodeluservalue->lastname),
                             'user_pic_moodle_url' => $moodleurlpic,
                             'email' => $moodeluservalue->email,
                             'city' => $moodeluservalue->city,
