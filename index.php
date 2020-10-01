@@ -941,8 +941,7 @@ if (!empty($categories)) {
                                                                 echo $coursevalue->id; ?>">
                                                                 Resync</a></li>
                                                             <?php
-                                                        } else {
-                                                            ?>
+                                                        } else {?>
                                                             <li><a href="<?php
                                                                     echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
                                                                 ?action=add&courseid=
