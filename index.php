@@ -1069,17 +1069,14 @@ if (isset($_REQUEST['action'])) {
 
                                             if (!empty($alreadyenabled)) {
                                                 $enabled = true;
-                                            }?>
-                                                                <tr>
-                                                                    <td><?php $oldsectionsname == '';
-                                                                    if ($oldsectionsname !=
-                                                                    $sectionsdetails->name) {
-                                                                        echo $sectionsdetails->name;?> - <?php
-                                                                    echo $coursedetails->fullname;} ?></td>
-                                                                    <td>
-                                                                        <div class="tqs-left"><?php
-                                                                            $cm = $modinfo->cms[$activityids->id];
-
+                                            }
+                                            echo '<tr><td>'.$oldsectionsname == '';
+                                            if ($oldsectionsname != $sectionsdetails->name) {
+                                                echo $sectionsdetails->name. "-";
+                                                echo $coursedetails->fullname;
+                                            }
+                                            echo '</td><td><div class="tqs-left">';
+                                            $cm = $modinfo->cms[$activityids->id];
                                             if ($cm) {
                                                 $iconurl = $cm->get_icon_url();
                                                 $icon = '<img src="' . $cm->get_icon_url() . '"
@@ -1088,96 +1085,63 @@ if (isset($_REQUEST['action'])) {
                                                 $icon = '<i class="fa fa-recycle"></i>';
                                                 $iconurl = '';
                                             }
-
-                                            echo $icon;?>
-                                            <span><?php $oldsectionsname = $sectionsdetails->name;
-                                            echo $valuefinal->name;?></span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="tqs-right">
-                                                                            <span class="tqs-span-
-                                                                            <?php if ($enabled) {
-                                                                                echo "yes";
-                                                                                } else {
-                                                                                    echo "no";
-                                                                                    }?>">
-                                                                                <?php if ($enabled) {
-                                                                                    echo "Yes";
-                                                                                } else {
-                                                                                    echo "No";
-                                                                                }?> </span>
-                                                                            <ul>
-                                                                            <?php $url = parse_url(
-                                                                                $_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                                                                                if ($enabled) {?>
-                                                                                        <li><a  href="
-                                                                                        <?php echo $url; ?>?resync_activity=1&
-                                                                                        activity_id=<?php
-                                                                                        echo $activityids->id; ?>
-                                                                                        &activity_name=
-                                                                                        <?php echo $valuefinal->name ?>&
-                                                                                        course_id=
-                                                                                        <?php echo $_REQUEST['courseid'];
-                                                                                        ?>">Resync</a></li>
-                                                                                        <?php
-}
-                                            if ($enabled) {?>
-                                                                                        <li><a onclick="UnsyncActivity('
-                                                                                        <?php echo $activityids->id; ?>')" 
-                                                                                        href="#">Unsync</a></li><?php } else {
+                                            echo $icon;
+                                            echo '<span>'.$oldsectionsname = $sectionsdetails->name;
+                                            echo $valuefinal->name;
+                                            echo '</span></div></td><td><div class="tqs-right">
+                                            <span class="tqs-span-';
+                                            if ($enabled) { 
+                                                echo "yes";
+                                            } else {
+                                                echo "no";
+                                            }
+                                            echo '">';
+                                            if ($enabled) {
+                                                echo "Yes";
+                                            } else {
+                                                echo "No";
+                                            }
+                                            echo '</span><ul>';
+                                            $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                                            if ($enabled) {
+                                                echo '<li><a  href="'.$url.'?resync_activity=1&activity_id=
+                                                '.$activityids->id.'&activity_name='.$valuefinal->name.'&course_id='.$_REQUEST
+                                                ['courseid'].'">Resync</a></li>';
+                                            }
+                                            if ($enabled) {
+                                                echo '<li><a onclick="UnsyncActivity('.$activityids->id.')"
+                                                href="#">Unsync</a></li>';
+                                            } else {
                                                 $querystring = $coursedetails->fullname . "$$" .
                                                 $sectionsdetails->name . "$$" . $valuefinal->name . "$$" .
                                                 $activityids->id . "$$" . $courseid . "$$" .
                                                 $sectionsdetails->summary . "$$" .
                                                 strip_tags($valuefinal->intro . "$$" .
                                                 $activitystartdates . "$$" .
-                                                $activityenddates . "$$" . $tbl . "$$" . $iconurl);?>
-                                                                                            <li><input
-                                                                                            class="all_activity_checkbox_singl
-                                                                                            e" type="checkbox"
-                                                                                            name="all_activities[]" value="<?
-                                                                                            php echo str_replace('"', '',
-                                                                                            $querystring); ?>"></li>
-                                                                                            <?php }?>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                    </td>
-                                                                                    <?php if (isset
-                                                                                    ($valuefinal->questionsperpage)) {
-                                                                                        $isquiz = $DB->get_record_sql("SELECT
-                                                                                        id FROM
-                                                                                        {tool_leeloolxp_sync}
-                                                                                        where activityid = '$activityids->id'
-                                                                                        and `is_quiz` = '1'");
-
-                                                                                        if (!empty($isquiz)) {
-                                                                                            $checked = true;
-                                                                                        } else {
-                                                                                                $checked = false;
-                                                                                                }
-                                                                                        ?>
-                                                                                        <td style="text-align: center"> 
-                                                                                        <input type="checkbox" 
-                                                                                        <?php if ($checked) {
-                                                                                            echo "checked='checked'";
-                                                                                            }?> 
-                                                                                            name="quiz_sync[]" 
-                                                                                            class="quiz_sync_check" 
-                                                                                            value="<?php
-                                                                                            echo $activityids->id; ?>"></td> 
-                                                                                            <?php
-                                                                                    }else
-                                                                                    {?> 
-                                                                                        <td></td> 
-                                                                                        <?php
-                                                                                    }?>
-                                                                                    </tr>
-
-
-
-                                                                            <?php
+                                                $activityenddates . "$$" . $tbl . "$$" . $iconurl);
+                                                echo '<li><input class="all_activity_checkbox_single"
+                                                type="checkbox" name="all_activities[]" value="'.str_replace('"', '',
+                                                $querystring).'"></li>';
+                                            }
+                                            echo '</ul>';
+                                            echo '</div></td>';
+                                            if (isset($valuefinal->questionsperpage)) {
+                                                $isquiz = $DB->get_record_sql("SELECT id FROM
+                                                {tool_leeloolxp_sync} where activityid = '$activityids->id'
+                                                and `is_quiz` = '1'");
+                                                if (!empty($isquiz)) {
+                                                    $checked = true;
+                                                } else {
+                                                    $checked = false;
                                                 }
+                                                echo '<td style="text-align: center"><input type="checkbox"';
+                                                if ($checked) {
+                                                    echo "checked='checked'";
+                                                }
+                                                echo 'name="quiz_sync[]" class="quiz_sync_check"
+                                                value="'.$activityids->id.'"></td>';
+                                            } else {
+                                                echo '<td></td>';
                                             }
                                         }
                                     }
@@ -1187,6 +1151,8 @@ if (isset($_REQUEST['action'])) {
                     }
                 }
             }
+        }
+    }
 ?>
 
     <tr>
