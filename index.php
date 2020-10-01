@@ -247,7 +247,7 @@ $url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
     } else {
         return true;
     }
-if (isset($_REQUEST['resync_activity'])) {
+    if (isset($_REQUEST['resync_activity'])) {
     $activityid = $_REQUEST['activity_id'];
     $activityname = $_REQUEST['activity_name'];
     $courseid = $_REQUEST['course_id'];
@@ -285,7 +285,6 @@ if (isset($_REQUEST['resync_activity'])) {
                                         $sectionsdetails->name;
                                         $cm = $modinfo->cms[$activityids->id];
                                         $oldsectionsname = $sectionsdetails->name;
-
                                         if ($tbl == 'lesson') {
                                             $activitystartdates = $valuefinal->available;
                                             $activityenddates = $valuefinal->deadline;
@@ -360,11 +359,17 @@ if (isset($_REQUEST['resync_activity'])) {
         'activity_end_date' => date("Y-m-d", $activityenddates),
         'activity_type' => $activitytype,
     ];
-    $ch = curl_init($teamniourl . '/admin/sync_moodle_course/activity_sync');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    $response = curl_exec($ch);
-    curl_close($ch);
+
+    $curl = new curl;
+    $url = $teamniourl . '/admin/sync_moodle_course/activity_sync';
+    $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($post),
+        );
+    if (!$$response = $curl->post($url, $post, $options)) {
+        return true;
+    }
     $msg = 'Resychronizationed successfully.';
 }
 
@@ -480,11 +485,16 @@ if (isset($_REQUEST['resync'])) {
         'moodle_course_id' => $idnumber,
         'sections' => json_encode($sections),
     ];
-    $ch = curl_init($teamniourl . '/admin/sync_moodle_course/resync_course');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    $response = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl;
+    $url = $teamniourl . '/admin/sync_moodle_course/resync_course';
+    $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($post),
+        );
+    if (!$$response = $curl->post($url, $post, $options)) {
+        return true;
+    }
     $msg = 'Resychronizationed successfully.';
 }
 
@@ -494,11 +504,16 @@ if (isset($_REQUEST['unsync_id']) && !empty($_REQUEST['unsync_id'])) {
     array('activityid' => $activityidmoodlearr));
     $taskid = $activitydetailsagain->teamnio_task_id;
     $post = ['task_id' => $taskid];
-    $ch = curl_init($teamniourl . '/admin/sync_moodle_course/unsyncactivity');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    $response = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl;
+    $url = $teamniourl . '/admin/sync_moodle_course/unsyncactivity';
+    $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($post),
+        );
+    if (!$$response = $curl->post($url, $post, $options)) {
+        return true;
+    }
     $DB->execute("DELETE FROM {tool_leeloolxp_sync} where activityid = '$activityidmoodlearr'");
     $msg = 'Unsychronizationed successfully.';
 }
@@ -506,11 +521,16 @@ if (isset($_REQUEST['unsync_id']) && !empty($_REQUEST['unsync_id'])) {
 if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
     $courseid = $_REQUEST['id'];
     $post = ['course_id' => $courseid];
-    $ch = curl_init($teamniourl . '/admin/sync_moodle_course/unsynccourse');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    $response = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl;
+    $url = $teamniourl . '/admin/sync_moodle_course/unsynccourse';
+    $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($post),
+        );
+    if (!$$response = $curl->post($url, $post, $options)) {
+        return true;
+    }
     $DB->execute("DELETE FROM {tool_leeloolxp_sync} where courseid = '$courseid'");
     $msg = 'Unsychronizationed successfully.';
 }
@@ -523,11 +543,16 @@ if (isset($_REQUEST['course_id_date']) && !empty($_REQUEST['course_id_date'])) {
         'startdate' => $coursedetailsagain->startdate,
         'enddate' => $coursedetailsagain->enddate,
     ];
-    $ch = curl_init($teamniourl . '/admin/sync_moodle_course/sync_date');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    $response = curl_exec($ch);
-    curl_close($ch);
+    $url = $teamniourl . '/admin/sync_moodle_course/sync_date';
+    $curl = new curl;
+    $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($post),
+        );
+    if (!$$response = $curl->post($url, $post, $options)) {
+        return true;
+    }
     $msg = 'Date Sychronizationed successfully.';
 }
 
@@ -773,10 +798,17 @@ if (isset($_REQUEST['sync_activities'])) {
             'activity_type' => $activitytype,
             'activity_url' => $activityurl,
         ];
-        $ch = curl_init($teamniourl . '/admin/sync_moodle_course/index');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-        $response = curl_exec($ch);
+        
+        $url = $teamniourl . '/admin/sync_moodle_course/index';
+        $curl = new curl;
+        $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($post),
+        );
+        if (!$$response = $curl->post($url, $post, $options)) {
+            return true;
+        }
         $response = json_decode($response, true);
         curl_close($ch);
         $courseid = $courseidagain;
@@ -810,11 +842,17 @@ if (isset($_REQUEST['sync_activities'])) {
             $isqpost = [
                 'activity_id' => $value,
             ];
-            $ch = curl_init($teamniourl . '/admin/sync_moodle_course/is_quiz_update');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $isqpost);
-            $response = curl_exec($ch);
-            curl_close($ch);
+            $url = $teamniourl . '/admin/sync_moodle_course/is_quiz_update';
+            $curl = new curl;
+            $options = array(
+                'CURLOPT_RETURNTRANSFER' => true,
+                'CURLOPT_HEADER' => false,
+                'CURLOPT_POST' => count($post),
+            );
+            if (!$$response = $curl->post($url, $post, $options)) {
+                return true;
+            }
+
         }
     }
 }
