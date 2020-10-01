@@ -17,7 +17,7 @@
 /**
  * Admin settings and defaults
  *
- * @package leeloolxp_sync
+ * @package tool_leeloolxp_sync
  * @copyright  2020 Leeloo LXP (https://leeloolxp.com)
  * @author Leeloo LXP <info@leeloolxp.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
