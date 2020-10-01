@@ -1045,10 +1045,13 @@ if (isset($_REQUEST['action'])) {
                                                                                         'workshop') {
                                                                                             $activitystartdates
                                                                                             = $valuefinal->submissionstart;
-                                                                                            $activityenddates = $valuefinal->submissionend;
+                                                                                            $activityenddates = 
+                                                                                            $valuefinal->submissionend;
                                                                                         } else {
-                                                                                            $activitystartdates = $coursedetails->startdate;
-                                                                                            $activityenddates = $coursedetails->enddate;
+                                                                                            $activitystartdates = 
+                                                                                            $coursedetails->startdate;
+                                                                                            $activityenddates = 
+                                                                                            $coursedetails->enddate;
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1065,7 +1068,6 @@ if (isset($_REQUEST['action'])) {
                                                     {tool_leeloolxp_sync}
                                                     where activityid = '$activityids->id' and enabled = '1'");
                                                     $enabled = false;
-
                                                     if (!empty($alreadyenabled)) {
                                                         $enabled = true;
                                                     }
@@ -1087,7 +1089,8 @@ if (isset($_REQUEST['action'])) {
                                                     echo $icon;
                                                     echo '<span>'.$oldsectionsname = $sectionsdetails->name;
                                                     echo $valuefinal->name;
-                                                    echo '</span></div></td><td><div class="tqs-right">
+                                                    echo '</span></div></td><td>
+                                                    <div class="tqs-right">
                                                     <span class="tqs-span-';
                                                     if ($enabled) { 
                                                         echo "yes";
@@ -1119,7 +1122,8 @@ if (isset($_REQUEST['action'])) {
                                                         $activitystartdates . "$$" .
                                                         $activityenddates . "$$" . $tbl . "$$" . $iconurl);
                                                         echo '<li><input class="all_activity_checkbox_single"
-                                                        type="checkbox" name="all_activities[]" value="'.str_replace('"', '',
+                                                        type="checkbox" name="all_activities[]"
+                                                        value="'.str_replace('"', '',
                                                         $querystring).'"></li>';
                                                     }
                                                     echo '</ul>';
@@ -1152,18 +1156,13 @@ if (isset($_REQUEST['action'])) {
                     }
                 }
             }
-?>
-
-    <tr>
-        <td></td>
-        <td></td>
-        <td><input type="submit" name="sync_activities" value="Submit"></td>
-        <td></td>
-    </tr>
-</form>
-</table>
-<?php
-}
+            echo '<tr><td></td><td></td>
+            <td><input type="submit" name="sync_activities" value="Submit"></td>
+            <td></td>
+            </tr>
+            </form>
+            </table>';
+        }
 ?>
 <script type="text/javascript">
     function check_all_is_quiz(){
