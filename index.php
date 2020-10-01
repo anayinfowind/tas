@@ -259,7 +259,7 @@ if (isset($_REQUEST['resync_activity'])) {
     $sectionsone = $sections;
     $modinfo = get_fast_modinfo($courseresyncactivity);
     if (!empty($sectionsone)) {
-        foreach ($sections as $sectionkey => $sectionsdetails) {
+        foreach ($sectionsone as $sectionkey => $sectionsdetails) {
             if ($sectionsdetails->name != '') {
                 $modulescourse = $DB->get_records("course_modules",
                 array('section' => $sectionsdetails->id)); // Fecth modules and instaced of modules.
@@ -396,11 +396,6 @@ if (isset($_REQUEST['resync'])) {
                                     foreach ($moduledetail as $key => $valuefinal) {
                                         $activityids = $DB->get_record('course_modules',
                                         array('instance' => $instance, 'module' => $moduleid));
-
-                                        $alreadyenabled = $DB->get_record_sql("SELECT id FROM {tool_leeloolxp_sync}
-                                        where activityid = '$activityids->id' and enabled = '1'");
-                                        $enabled = false;
-                                        $enabled = true;
                                         $sectionsdetails->name;
                                         $cm = $modinfo->cms[$activityids->id];
                                         $oldsectionsname = $sectionsdetails->name;
