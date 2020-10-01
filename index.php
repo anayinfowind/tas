@@ -686,7 +686,7 @@ if (isset($_REQUEST['sync_activities'])) {
                 $moodleurlpic = new moodle_url('/user/pix.php/' . $moodeluservalue->id . '/f.jpg');
                 if ($usertype == 'student') {
                     $lastlogin = date('Y-m-d h:i:s', $moodeluservalue->lastlogin);
-                    $moodleuserstudentarray[] = array(
+                    $moodleuserstudentarrayy[] = array(
                         'username' => $moodeluservalue->username,
                         'fullname' => ucfirst($moodeluservalue->firstname) . " " .
                         ucfirst($moodeluservalue->middlename). " " .ucfirst($moodeluservalue->lastname),
@@ -724,7 +724,7 @@ if (isset($_REQUEST['sync_activities'])) {
                     );
                 } else {
                     if ($usertype == 'teacher') {
-                        $moodleuserteacherarray[] = array('username' => $moodeluservalue->username,
+                        $moodleuserteacherarrayy[] = array('username' => $moodeluservalue->username,
                             'fullname' => ucfirst($moodeluservalue->firstname). " " .
                             ucfirst($moodeluservalue->middlename) . " ".ucfirst($moodeluservalue->lastname),
                             'user_pic_moodle_url' => $moodleurlpic,
@@ -768,8 +768,8 @@ if (isset($_REQUEST['sync_activities'])) {
         $coursedetailsagain = $DB->get_record('course', array('id' => $courseidagain));
         $groupname = '';
         $post = [
-            'moodle_users_students' => json_encode($moodleuserstudentarray),
-            'moodle_users_teachers' => json_encode($moodleuserteacherarray),
+            'moodle_users_students' => json_encode($moodleuserstudentarrayy),
+            'moodle_users_teachers' => json_encode($moodleuserteacherarrayy),
             'course_section_activity' => $activityset,
             'is_quiz_task' => 0,
             'group_name' => $groupname,
