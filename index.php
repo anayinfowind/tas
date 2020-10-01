@@ -1045,12 +1045,12 @@ if (isset($_REQUEST['action'])) {
                                                                                         'workshop') {
                                                                                             $activitystartdates
                                                                                             = $valuefinal->submissionstart;
-                                                                                            $activityenddates = 
+                                                                                            $activityenddates =
                                                                                             $valuefinal->submissionend;
                                                                                         } else {
-                                                                                            $activitystartdates = 
+                                                                                            $activitystartdates =
                                                                                             $coursedetails->startdate;
-                                                                                            $activityenddates = 
+                                                                                            $activityenddates =
                                                                                             $coursedetails->enddate;
                                                                                         }
                                                                                     }
@@ -1092,7 +1092,7 @@ if (isset($_REQUEST['action'])) {
                                                     echo '</span></div></td><td>
                                                     <div class="tqs-right">
                                                     <span class="tqs-span-';
-                                                    if ($enabled) { 
+                                                    if ($enabled) {
                                                         echo "yes";
                                                     } else {
                                                         echo "no";
@@ -1107,7 +1107,8 @@ if (isset($_REQUEST['action'])) {
                                                     $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                                                     if ($enabled) {
                                                         echo '<li><a  href="'.$url.'?resync_activity=1&activity_id=
-                                                        '.$activityids->id.'&activity_name='.$valuefinal->name.'&course_id='.$_REQUEST
+                                                        '.$activityids->id.'&activity_name='.$valuefinal->name.'&course_id='.
+                                                        $_REQUEST
                                                         ['courseid'].'">Resync</a></li>';
                                                     }
                                                     if ($enabled) {
@@ -1162,7 +1163,7 @@ if (isset($_REQUEST['action'])) {
             </tr>
             </form>
             </table>';
-        }
+}
 ?>
 <script type="text/javascript">
     function check_all_is_quiz(){
