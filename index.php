@@ -941,7 +941,7 @@ if (!empty($categories)) {
                                                         } else {
                                                             echo '<li><a href="'.parse_url(
                                                                 $_SERVER['REQUEST_URI'], PHP_URL_PATH
-                                                                ).'?action=add&courseid=.'$coursevalue->id.'">Add</a></li>';
+                                                                ).'?action=add&courseid='.$coursevalue->id.'">Add</a></li>';
                                                         }
                                                         ?>
                                                     </ul>
