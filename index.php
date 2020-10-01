@@ -924,31 +924,26 @@ if (!empty($categories)) {
                                                 }
                                                     ?>
                                                     <ul>
-                                                        <?php if ($alreadysync) {?>
-                                                            <li><a href="<?php
-                                                                echo parse_url($_SERVER['REQUEST_URI'] , PHP_URL_PATH); ?>
-                                                                ?action=add&courseid=<?php echo $coursevalue->id; ?>">
+                                                        <?php 
+                                                        if ($alreadysync) {
+                                                            echo '<li><a href="'.parse_url($_SERVER['REQUEST_URI'] , 
+                                                            PHP_URL_PATH).'
+                                                            ?action=add&courseid='.$coursevalue->id.">
                                                                 Edit</a></li>
-                                                            <li>
-                                                                <a href="#" onclick="UnsyncCourse('<?php echo
-                                                                $coursevalue->fullname; ?>
-                                                                ','<?php echo $coursevalue->id; ?>');">
+                                                                <li><a href="javascript:void();" onclick="UnsyncCourse(.
+                                                                $coursevalue->fullname.','.$coursevalue->id.');">
                                                                 Unsync</a></li>
                                                             <li>
-                                                            <?php $parseurl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                                                                <a href="<?php echo $parseurl; ?>
-                                                                ?resync=resync&courseid_resync=<?php
-                                                                echo $coursevalue->id; ?>">
-                                                                Resync</a></li>
-                                                            <?php
-                                                        } else {?>
-                                                            <li><a href="<?php
-                                                                    echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                                                                ?action=add&courseid=
-                                                                <?php echo $coursevalue->id; ?>">Add</a></li>
-                                                                <?php
-                                                                }
-                                                            ?>
+                                                            '.$parseurl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH).'
+                                                                <a href="'.$parseurl.'
+                                                                ?resync=resync&courseid_resync='.$coursevalue->id.'">
+                                                                Resync</a></li>';
+                                                        } else {
+                                                            echo  echo '<li><a href="'.parse_url(
+                                                                $_SERVER['REQUEST_URI'], PHP_URL_PATH
+                                                                ).'?action=add&courseid=.'$coursevalue->id.'">Add</a></li>';
+                                                        }
+                                                        ?>
                                                     </ul>
                                                 </div>
                                             </td>
