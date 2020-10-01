@@ -257,7 +257,6 @@ if (isset($_REQUEST['resync_activity'])) {
     $sections = $DB->get_records($table, array('course' => $courseid)); // Fetch sections of each course.
     $courseresyncactivity = get_course($courseid);
     $modinfo = get_fast_modinfo($courseresyncactivity);
-    $arrmain = array();
     if (!empty($sections)) {
         foreach ($sections as $sectionkey => $sectionsdetails) {
             if ($sectionsdetails->name != '') {
@@ -383,7 +382,7 @@ if (isset($_REQUEST['resync'])) {
     $sections = $DB->get_records_sql("SELECT * FROM {course_sections} where course = '$courseidresync' and name != ''");
     $course = get_course($courseidresync);
     $modinfo = get_fast_modinfo($course);
-    $arrmain = array();
+    $arrmainone = array();
     if (!empty($sections)) {
         foreach ($sections as $sectionkey => $sectionsdetails) {
             if ($sectionsdetails->name != '') {
@@ -462,7 +461,7 @@ if (isset($_REQUEST['resync'])) {
                                                 }
                                             }
                                         }
-                                        $arrmain[$activityids->id] =
+                                        $arrmainone[$activityids->id] =
                                         array('name' => $valuefinal->name,
                                         'activity_start_date' => $activitystartdates,
                                         'activity_end_date' => $activityenddates);
@@ -478,7 +477,7 @@ if (isset($_REQUEST['resync'])) {
     $post = [
         'course_id' => $courseidresync,
         'course_name' => $coursename,
-        'activity_array' => json_encode($arrmain),
+        'activity_array' => json_encode($arrmainone),
         'start_date' => $coursedetails->startdate,
         'project_description' => $projectdescription,
         'end_date' => $coursedetails->enddate,
