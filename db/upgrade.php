@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Upgrade script for leeloolxp_sync.
+ * Upgrade script for tool_leeloolxp_sync.
  *
  * @package    tool_leeloolxp_sync
  * @copyright  2020 leeloolxp.com
