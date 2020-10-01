@@ -924,13 +924,13 @@ if (!empty($categories)) {
                                                 }
                                                     ?>
                                                     <ul>
-                                                        <?php 
+                                                        <?php
                                                         if ($alreadysync) {
-                                                            echo '<li><a href="'.parse_url($_SERVER['REQUEST_URI'] , 
+                                                            echo '<li><a href="'.parse_url($_SERVER['REQUEST_URI'] ,
                                                             PHP_URL_PATH).'
-                                                            ?action=add&courseid='.$coursevalue->id.">
+                                                            ?action=add&courseid='.$coursevalue->id.'">
                                                                 Edit</a></li>
-                                                                <li><a href="javascript:void();" onclick="UnsyncCourse(.
+                                                                <li><a href="javascript:void();" onclick="UnsyncCourse('.
                                                                 $coursevalue->fullname.','.$coursevalue->id.');">
                                                                 Unsync</a></li>
                                                             <li>
@@ -949,8 +949,8 @@ if (!empty($categories)) {
                                             </td>
                                         </tr>
                                     <?php
-                                    }
-                                }
+                        }
+                    }
 ?>
                                 </table>
                             </div>
@@ -958,8 +958,8 @@ if (!empty($categories)) {
                     </div>
                 </div>
             <?php
-            }
-        }?>
+    }
+}?>
 </div>
 
 
@@ -981,14 +981,14 @@ if (isset($_REQUEST['action'])) {
     id="all_is_quiz_checkbox" onchange="check_all_is_quiz();"> Select all </th></tr>
         <form method="post">
             <?php
-if ($_REQUEST['action'] == 'add') {
-        $courseid = $_REQUEST['courseid'];
+                if ($_REQUEST['action'] == 'add') {
+                $courseid = $_REQUEST['courseid'];
 
-        $coursedetails = $DB->get_record('course', array('id' => $courseid));
-        $table = 'course_sections';
-        $sections = $DB->get_records($table, array('course' => $courseid));
-        $course = get_course($courseid);
-        $modinfo = get_fast_modinfo($course);
+                $coursedetails = $DB->get_record('course', array('id' => $courseid));
+                $table = 'course_sections';
+                $sections = $DB->get_records($table, array('course' => $courseid));
+                $course = get_course($courseid);
+                $modinfo = get_fast_modinfo($course);
 
         if (!empty($sections)) {
             foreach ($sections as $sectionkey => $sectionsdetails) {
