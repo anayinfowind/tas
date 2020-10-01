@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param int $oldversion
  * @return bool always true
  */
-function xmldb_tool_tctsync_upgrade($oldversion) {
+function xmldb_tool_leeloolxp_sync_upgrade($oldversion) {
     global $DB;
     $dbman = $DB->get_manager();
     if ($oldversion < 2015031200) {
