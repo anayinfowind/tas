@@ -229,24 +229,24 @@ $postcourses = optional_param('course', null, PARAM_RAW);
 $activityset = optional_param('sync_activity_resouce', null, PARAM_RAW);
 $msg = '';
 $configtoolleeloolxpsync = get_config('tool_leeloolxp_sync');
-$liacnsekey = $configtoolleeloolxpsync->leeloolxp_synclicensekey;
-$postdata = '&license_key=' . $liacnsekey;
-$ch = curl_init();
-$url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HEADER, false);
-curl_setopt($ch, CURLOPT_POST, count($postdata));
-curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-$output = curl_exec($ch);
-curl_close($ch);
-$infoteamnio = json_decode($output);
-if ($infoteamnio->status != 'false') {
-    $teamniourl = $infoteamnio->data->install_url;
-} else {
-    echo "Teamnio url not found";die;
-}
 
+$curl = new curl;
+$postdata = array('license_key' => $liacnsekey);
+$url = 'https://leeloolxp.com/api_moodle.php/?action=page_info';
+    $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER' => false,
+            'CURLOPT_POST' => count($postdata),
+        );
+    if (!$output = $curl->post($url, $postdata, $options)) {
+        return true;
+    }
+    $infoleeloolxp = json_decode($output);
+    if ($infoleeloolxp->status != 'false') {
+        $teamniourl = $infoleeloolxp->data->install_url;
+    } else {
+        return true;
+    }
 if (isset($_REQUEST['resync_activity'])) {
     $activityid = $_REQUEST['activity_id'];
     $activityname = $_REQUEST['activity_name'];
